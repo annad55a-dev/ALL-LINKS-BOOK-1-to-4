@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present Continuous Positive (+)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --accent: #3D6D9E;
+    --light: #EDF4FC;
+    --border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+  }
+  .card {
+    background: var(--light);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .two-col { display: flex; gap: 28px; }
+  .col { flex: 1; }
+  .col.split { border-right: 2px solid var(--border); padding-right: 28px; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    text-align: center;
+    padding: 9px 4px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.9rem;
+  }
+  td.accent { color: var(--accent); }
+  .prompt-list p {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+    margin: 14px 0 4px;
+  }
+  input.blank, textarea.blank {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    min-width: 80px;
+    max-width: 220px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  input.blank:focus, textarea.blank:focus { outline: none; border-bottom-color: var(--accent); }
+  input.blank.correct, textarea.blank.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.blank.incorrect, textarea.blank.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.line {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .sentence-item { margin-bottom: 14px; }
+  .sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 4px; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+  button.reset-btn { background: var(--accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+  @media (max-width: 640px) {
+    .two-col { flex-direction: column; }
+    .col.split { border-right: none; border-bottom: 2px solid var(--border); padding-right: 0; padding-bottom: 18px; }
+    th, td { font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Present Continuous Positive (+)</h1>
+  <div class="card">
+<div class="two-col">
+<div class="col split"><table><tr><th>Subject</th><th>To Be</th><th>Verb + ing</th></tr><tr><td>I</td><td>am</td><td>speaking</td></tr><tr><td>You</td><td>are</td><td>speaking</td></tr><tr><td>He</td><td>is</td><td>speaking</td></tr><tr><td>She</td><td>is</td><td>speaking</td></tr><tr><td>It</td><td>is</td><td>speaking</td></tr><tr><td>We</td><td>are</td><td>speaking</td></tr><tr><td>You</td><td>are</td><td>speaking</td></tr><tr><td>They</td><td>are</td><td>speaking</td></tr></table></div>
+<div class="col"><p style="text-align:center;color:var(--accent);font-weight:700;margin:0 0 6px;">Complete</p><table><tr><th>Subject</th><th>To Be</th><th>Verb + ing</th></tr><tr><td>I</td><td>am</td><td>reading</td></tr><tr><td>You</td><td><input class="blank" data-answer="are"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>He</td><td><input class="blank" data-answer="is"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>She</td><td><input class="blank" data-answer="is"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>It</td><td><input class="blank" data-answer="is"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>We</td><td><input class="blank" data-answer="are"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>You</td><td><input class="blank" data-answer="are"></td><td><input class="blank" data-answer="reading"></td></tr><tr><td>They</td><td><input class="blank" data-answer="are"></td><td><input class="blank" data-answer="reading"></td></tr></table></div>
+</div>
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/[’‘]/g, "'").replace(/\s+/g, ' ');
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.blank[data-answer]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const candidates = input.dataset.answer.split('||').map(normalize);
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    if (candidates.includes(userVal)) {
+      input.classList.add('correct');
+      correct++;
+    } else {
+      input.classList.add('incorrect');
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

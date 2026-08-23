@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>First Lesson - Exercise 02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --accent: #3D6D9E;
+    --light: #EDF4FC;
+    --border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .instructions {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .instructions u { text-decoration-color: var(--accent); }
+  .reveal-answer {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--incorrect-fg);
+    margin-top: 4px;
+    min-height: 1.1em;
+  }
+  .card {
+    background: var(--light);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .two-col { display: flex; gap: 28px; }
+  .col { flex: 1; }
+  .col.split { border-right: 2px solid var(--border); padding-right: 28px; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    text-align: center;
+    padding: 9px 4px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.9rem;
+  }
+  td.accent { color: var(--accent); }
+  .prompt-list p {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+    margin: 14px 0 4px;
+  }
+  input.blank, textarea.blank {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    min-width: 80px;
+    max-width: 220px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  input.blank:focus, textarea.blank:focus { outline: none; border-bottom-color: var(--accent); }
+  input.blank.correct, textarea.blank.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.blank.incorrect, textarea.blank.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.line {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .sentence-item { margin-bottom: 16px; }
+  .sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 6px; }
+  .sentence-item .num { color: var(--accent); margin-right: 4px; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+  button.reset-btn { background: var(--accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+  @media (max-width: 640px) {
+    .two-col { flex-direction: column; }
+    .col.split { border-right: none; border-bottom: 2px solid var(--border); padding-right: 0; padding-bottom: 18px; }
+    th, td { font-size: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>First Lesson - Exercise 02</h1>
+  <div class="instructions">Write the answers using the <u>contracted form</u>.</div>
+  <div class="card">
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">1.</span>Am I Mr/Mrs …? (teacher's name)</div>
+      <input class="line" data-pattern="^yes, you're mrs? \S+" data-hint="Yes, you're Mr/Mrs [your teacher's name].">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">2.</span>Are you a student? (student)</div>
+      <input class="line" data-answer="Yes, I'm a student">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">3.</span>Is she a student? (student)</div>
+      <input class="line" data-answer="Yes, she's a student">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">4.</span>Is she Mrs Potter? (Mrs Potter)</div>
+      <input class="line" data-answer="Yes, she's Mrs Potter">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">5.</span>Is it a house? (house)</div>
+      <input class="line" data-answer="Yes, it's a house">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">6.</span>Is it a garden? (garden)</div>
+      <input class="line" data-answer="Yes, it's a garden">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">7.</span>Is it a cat? (cat)</div>
+      <input class="line" data-answer="Yes, it's a cat">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">8.</span>Is it a dog? (dog)</div>
+      <input class="line" data-answer="Yes, it's a dog">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">9.</span>Am I a teacher? (a teacher)</div>
+      <input class="line" data-answer="Yes, you're a teacher">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">10.</span>Are you students? (students)</div>
+      <input class="line" data-answer="Yes, we're students">
+      <div class="reveal-answer"></div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.!]+$/, '')
+    .replace(/\s+/g, ' ');
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.line[data-answer], .line[data-pattern]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const userVal = normalize(input.value);
+    const reveal = input.parentElement.querySelector('.reveal-answer');
+    input.classList.remove('correct', 'incorrect');
+    let isCorrect = false;
+
+    if (input.dataset.pattern) {
+      isCorrect = new RegExp(input.dataset.pattern, 'i').test(userVal);
+    } else {
+      const rawCandidates = input.dataset.answer.split('||').map(s => s.trim());
+      const candidates = rawCandidates.map(normalize);
+      isCorrect = candidates.includes(userVal);
+      if (!isCorrect && reveal) reveal.textContent = 'Correct answer: ' + rawCandidates[0] + '.';
+    }
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correct++;
+      if (reveal) reveal.textContent = '';
+    } else {
+      input.classList.add('incorrect');
+      if (input.dataset.pattern && reveal) {
+        reveal.textContent = 'e.g. ' + input.dataset.hint;
+      }
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

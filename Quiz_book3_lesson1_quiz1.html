@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 3 - Lesson 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #8A6100;
+    --gold: #E0A800;
+    --light-yellow: #FFF9E6;
+    --yellow-border: #F2D488;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-yellow);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--dark);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--dark);
+    color: #fff;
+    border: 2px solid var(--dark);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--yellow-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-yellow);
+    border: 2px solid var(--yellow-border);
+    color: var(--dark);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--yellow-border);
+  }
+
+  .option-pill.selected {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--yellow-border);
+    border-radius: 10px;
+    color: var(--dark);
+    background: var(--light-yellow);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--dark);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--gold);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--dark);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 3 - Lesson 1</h1>
+  <div class="instructions">Choose the correct answer for each question, then press "Check Answers".</div>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 1,
+  "title": "Book 3 - Lesson 1",
+  "sections": [
+    {
+      "name": "Time & Holidays Vocabulary",
+      "questions": [
+        { "id": "q1", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Day'?", "options": ["Semana", "Dia", "Ano", "Mês"], "correct": "Dia" },
+        { "id": "q7", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'To be on holiday'?", "options": ["Feriado", "Férias (US)", "Estar de férias", "Encontro de namoro"], "correct": "Estar de férias" },
+        { "id": "q9", "type": "multiple_choice", "prompt": "Which is the correct Portuguese translation of 'Vacations' as used in US English?", "options": ["Feriado; Férias (UK)", "Aniversário", "Estar de férias", "Férias (US)"], "correct": "Férias (US)" }
+      ]
+    },
+    {
+      "name": "Months of the Year",
+      "questions": [
+        { "id": "q11", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'February'?", "options": ["Fevereiro", "Setembro", "Abril", "Dezembro"], "correct": "Fevereiro" },
+        { "id": "q17", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'August'?", "options": ["Setembro", "Agosto", "Dezembro", "Maio"], "correct": "Agosto" },
+        { "id": "q20", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'November'?", "options": ["Janeiro", "Maio", "Agosto", "Novembro"], "correct": "Novembro" }
+      ]
+    },
+    {
+      "name": "Dates & Time Expressions",
+      "questions": [
+        { "id": "q24", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Birthday'?", "options": ["Aniversário", "Data", "Praticar", "Para/Para que"], "correct": "Aniversário" },
+        { "id": "q26", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Last'?", "options": ["Data", "Último/a", "Hoje", "Praticar"], "correct": "Último/a" },
+        { "id": "q28", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Practise'?", "options": ["Para/Para que", "Data", "Praticar", "Hoje"], "correct": "Praticar" }
+      ]
+    },
+    {
+      "name": "Grammar & Vocabulary: Verb To Have",
+      "questions": [
+        { "id": "q30", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Without'?", "options": ["Sem", "Verbo ter", "Usando", "Também"], "correct": "Sem" },
+        { "id": "q33", "type": "multiple_choice", "prompt": "Complete the sentence: He ___ a cold.", "options": ["have", "has", "having", "haven't"], "correct": "has" },
+        { "id": "q34", "type": "multiple_choice", "prompt": "Complete the sentence: David and Margaret ___ a date - they are going to the cinema.", "options": ["has", "is having", "have", "haves"], "correct": "have" }
+      ]
+    },
+    {
+      "name": "Symptoms & Illness",
+      "questions": [
+        { "id": "q40", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Cold' (the illness)?", "options": ["Resfriado", "Febre", "Tosse", "Remédio"], "correct": "Resfriado" },
+        { "id": "q35", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Ache'?", "options": ["Tosse", "Dor", "Febre", "Resfriado"], "correct": "Dor" },
+        { "id": "q38", "type": "multiple_choice", "prompt": "What is the English translation of 'Doente, enjoado'?", "options": ["Ill", "Terrible", "Sick", "Cold"], "correct": "Sick" }
+      ]
+    },
+    {
+      "name": "At the Doctor's",
+      "questions": [
+        { "id": "q46", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Hospital'?", "options": ["Hospital", "Dentista", "Médico, doutor", "Pacientes"], "correct": "Hospital" },
+        { "id": "q45", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Patients'?", "options": ["Cliente", "Pacientes", "Hospital", "Dentista"], "correct": "Pacientes" },
+        { "id": "q53", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Have a date'?", "options": ["Hoje à noite", "Relógio de punho", "Consultar um médico", "Encontro de namoro"], "correct": "Encontro de namoro" }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Lesson - Exercise 02</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --accent: #3D6D9E;
+    --light: #EDF4FC;
+    --border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .instructions {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .instructions u { text-decoration-color: var(--accent); }
+  .reveal-answer {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--incorrect-fg);
+    margin-top: 4px;
+    min-height: 1.1em;
+  }
+  .reveal-inline {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--incorrect-fg);
+    margin-left: 6px;
+  }
+  .card {
+    background: var(--light);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .note {
+    text-align: center;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin: 0 0 16px;
+  }
+  input.line {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.inline {
+    font-family: 'Baloo 2', sans-serif;
+    width: 110px;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+    text-align: center;
+  }
+  input.inline:focus { outline: none; border-bottom-color: var(--accent); }
+  input.inline.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.inline.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .cloze-text { font-size: 1rem; line-height: 2.4; font-weight: 600; }
+  .sentence-item { margin-bottom: 16px; }
+  .sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 6px; }
+  .sentence-item .num { color: var(--accent); margin-right: 4px; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+  button.reset-btn { background: var(--accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Second Lesson - Exercise 02</h1>
+  <div class="instructions">Write the answers using the <u>extended form</u>; starting with <u>negative first</u> and <u>then with positive</u>, for example: No, you are not …; you are ….</div>
+  <div class="card">
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">1.</span>Am I Mr Potter? (teacher&#x27;s title and name)</div>
+      <input class="line" data-pattern="^no, you are not mr potter; you are (mr|mrs) \S+" data-hint="No, you are not Mr Potter; you are Mr/Mrs [teacher&#x27;s name].">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">2.</span>Are you Mr Green? (Your last name)</div>
+      <input class="line" data-pattern="^no, i am not mr green; i am (mr|mrs) \S+" data-hint="No, I am not Mr Green; I am Mr/Mrs [your last name].">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">3.</span>Is he Mr Green? (Mr Potter)</div>
+      <input class="line" data-answer="No, he is not Mr Green; he is Mr Potter">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">4.</span>Is she Mrs White? (Mrs Potter)</div>
+      <input class="line" data-answer="No, she is not Mrs White; she is Mrs Potter">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">5.</span>Is Mrs Potter a student? (a doctor)</div>
+      <input class="line" data-answer="No, she is not a student; she is a doctor">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">6.</span>Is she Amy? (Hannah)</div>
+      <input class="line" data-answer="No, she is not Amy; she is Hannah">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">7.</span>Is it a house? (car)</div>
+      <input class="line" data-answer="No, it is not a house; it is a car">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">8.</span>Is it a car? (a house)</div>
+      <input class="line" data-answer="No, it is not a car; it is a house">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">9.</span>Is it a cat? (a dog)</div>
+      <input class="line" data-answer="No, it is not a cat; it is a dog">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">10.</span>Is it a dog? (a cat)</div>
+      <input class="line" data-answer="No, it is not a dog; it is a cat">
+      <div class="reveal-answer"></div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.!]+$/, '')
+    .replace(/\s+/g, ' ');
+}
+function clearReveal(input) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) reveal.textContent = '';
+  const inline = input.nextElementSibling;
+  if (inline && inline.classList && inline.classList.contains('reveal-inline')) inline.textContent = '';
+}
+function showReveal(input, text) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) { reveal.textContent = text; return; }
+  let inline = input.nextElementSibling;
+  if (!inline || !inline.classList || !inline.classList.contains('reveal-inline')) {
+    inline = document.createElement('span');
+    inline.className = 'reveal-inline';
+    input.insertAdjacentElement('afterend', inline);
+  }
+  inline.textContent = text;
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.line[data-answer], .line[data-pattern], .inline[data-answer], .inline[data-pattern]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    let isCorrect = false;
+    let rawCandidates = null;
+
+    if (input.dataset.pattern) {
+      isCorrect = new RegExp(input.dataset.pattern, 'i').test(userVal);
+    } else {
+      rawCandidates = input.dataset.answer.split('||').map(s => s.trim());
+      const candidates = rawCandidates.map(normalize);
+      isCorrect = candidates.includes(userVal);
+    }
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correct++;
+      clearReveal(input);
+    } else {
+      input.classList.add('incorrect');
+      if (input.dataset.pattern) {
+        showReveal(input, 'e.g. ' + input.dataset.hint);
+      } else {
+        showReveal(input, 'Correct answer: ' + rawCandidates[0] + '.');
+      }
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenth Lesson - Exercise 03</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --accent: #3D6D9E;
+    --light: #EDF4FC;
+    --border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+  }
+  .instructions {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 400;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    opacity: 0.85;
+  }
+  .instructions u { text-decoration-color: var(--accent); }
+  .reveal-answer {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--incorrect-fg);
+    margin-top: 4px;
+    min-height: 1.1em;
+  }
+  .reveal-inline {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--incorrect-fg);
+    margin-left: 6px;
+  }
+  .card {
+    background: var(--light);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .note {
+    text-align: center;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin: 0 0 16px;
+  }
+  input.line {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.inline {
+    font-family: 'Baloo 2', sans-serif;
+    width: 110px;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+    text-align: center;
+  }
+  input.inline:focus { outline: none; border-bottom-color: var(--accent); }
+  input.inline.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.inline.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .cloze-text { font-size: 1rem; line-height: 2.4; font-weight: 600; }
+  .sentence-item { margin-bottom: 16px; }
+  .sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 6px; }
+  .sentence-item .num { color: var(--accent); margin-right: 4px; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+  button.reset-btn { background: var(--accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Tenth Lesson - Exercise 03</h1>
+  <div class="note">Q2, Q3 and Q10 have clues that are just a name/pronoun rather than a full location, so I assumed &#x27;next to&#x27; — please check against your picture.</div>
+  <div class="card">
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">1.</span>Where are you? (in front of the table)</div>
+      <input class="line" data-answer="I&#x27;m in front of the table">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">2.</span>Where is Mr Potter? (Mrs Potter)</div>
+      <input class="line" data-pattern="^he&#x27;?s (next to|with) mrs potter" data-hint="He&#x27;s next to Mrs Potter.">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">3.</span>Where is John? (Amy)</div>
+      <input class="line" data-pattern="^he&#x27;?s (next to|with) amy" data-hint="He&#x27;s next to Amy.">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">4.</span>Are you next to (Anna/Amy/Maria, etc.)? (no)</div>
+      <input class="line" data-pattern="^no.*" data-hint="No, I&#x27;m not next to [name].">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">5.</span>Are you behind the wall?</div>
+      <input class="line" data-pattern="^(yes|no).*" data-hint="No, I&#x27;m not behind the wall.">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">6.</span>Am I behind you? (in front of me)</div>
+      <input class="line" data-answer="No, you aren&#x27;t behind me; you&#x27;re in front of me">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">7.</span>Where&#x27;s the notebook? (on the table)</div>
+      <input class="line" data-answer="It&#x27;s on the table">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">8.</span>Where&#x27;s the notebook? (under the table.)</div>
+      <input class="line" data-answer="It&#x27;s under the table">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">9.</span>Where&#x27;s the pen? (on the notebook)</div>
+      <input class="line" data-answer="It&#x27;s on the notebook">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">10.</span>Where&#x27;s the window? (me)</div>
+      <input class="line" data-pattern="^it&#x27;?s next to me" data-hint="It&#x27;s next to me.">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">11.</span>Are you behind me? (in front of you.)</div>
+      <input class="line" data-answer="No, I&#x27;m not behind you; I&#x27;m in front of you">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">12.</span>Am I behind the door? (in front of the door.)</div>
+      <input class="line" data-answer="No, you aren&#x27;t behind the door; you&#x27;re in front of the door">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">13.</span>Am I sitting on the floor? (standing on the floor.)</div>
+      <input class="line" data-answer="No, you aren&#x27;t sitting on the floor; you&#x27;re standing on the floor">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">14.</span>Are the Potters behind us? (in front of us.)</div>
+      <input class="line" data-answer="No, the Potters aren&#x27;t behind us; they&#x27;re in front of us">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">15.</span>Are Mr and Mrs Potter sitting in front of us? (standing in front of us.)</div>
+      <input class="line" data-answer="No, they aren&#x27;t sitting in front of us; they&#x27;re standing in front of us">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">16.</span>Are the pictures behind them? (in front of them.)</div>
+      <input class="line" data-answer="No, the pictures aren&#x27;t behind them; they&#x27;re in front of them">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">17.</span>Where are you sitting? (on the chair.)</div>
+      <input class="line" data-answer="I&#x27;m sitting on the chair">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">18.</span>Is Hannah sitting on the floor? (standing in the garden.)</div>
+      <input class="line" data-answer="No, Hannah isn&#x27;t sitting on the floor; she&#x27;s standing in the garden">
+      <div class="reveal-answer"></div>
+    </div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">19.</span>Where am I? (in the classroom)</div>
+      <input class="line" data-answer="You&#x27;re in the classroom">
+      <div class="reveal-answer"></div>
+    </div>
+
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.!]+$/, '')
+    .replace(/\s+/g, ' ');
+}
+function clearReveal(input) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) reveal.textContent = '';
+  const inline = input.nextElementSibling;
+  if (inline && inline.classList && inline.classList.contains('reveal-inline')) inline.textContent = '';
+}
+function showReveal(input, text) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) { reveal.textContent = text; return; }
+  let inline = input.nextElementSibling;
+  if (!inline || !inline.classList || !inline.classList.contains('reveal-inline')) {
+    inline = document.createElement('span');
+    inline.className = 'reveal-inline';
+    input.insertAdjacentElement('afterend', inline);
+  }
+  inline.textContent = text;
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.line[data-answer], .line[data-pattern], .inline[data-answer], .inline[data-pattern]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    let isCorrect = false;
+    let rawCandidates = null;
+
+    if (input.dataset.pattern) {
+      isCorrect = new RegExp(input.dataset.pattern, 'i').test(userVal);
+    } else {
+      rawCandidates = input.dataset.answer.split('||').map(s => s.trim());
+      const candidates = rawCandidates.map(normalize);
+      isCorrect = candidates.includes(userVal);
+    }
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correct++;
+      clearReveal(input);
+    } else {
+      input.classList.add('incorrect');
+      if (input.dataset.pattern) {
+        showReveal(input, 'e.g. ' + input.dataset.hint);
+      } else {
+        showReveal(input, 'Correct answer: ' + rawCandidates[0] + '.');
+      }
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

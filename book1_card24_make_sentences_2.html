@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make Sentences – 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #7A1F2B;
+    --accent: #B23A4E;
+    --light: #FDECEE;
+    --border: #E8B4B8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.3px;
+  }
+  .card {
+    background: var(--light);
+    border: 2px solid var(--border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .two-col { display: flex; gap: 28px; }
+  .col { flex: 1; }
+  .col.split { border-right: 2px solid var(--border); padding-right: 28px; }
+  table { width: 100%; border-collapse: collapse; }
+  th {
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  td {
+    text-align: center;
+    padding: 9px 4px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.9rem;
+  }
+  td.accent { color: var(--accent); }
+  .prompt-list p {
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+    margin: 14px 0 4px;
+  }
+  input.blank, textarea.blank {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    min-width: 80px;
+    max-width: 220px;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+  }
+  input.blank:focus, textarea.blank:focus { outline: none; border-bottom-color: var(--accent); }
+  input.blank.correct, textarea.blank.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.blank.incorrect, textarea.blank.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.line {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--border);
+    background: transparent;
+    color: var(--navy);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .sentence-item { margin-bottom: 14px; }
+  .sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 4px; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+  button.reset-btn { background: var(--accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+  @media (max-width: 640px) {
+    .two-col { flex-direction: column; }
+    .col.split { border-right: none; border-bottom: 2px solid var(--border); padding-right: 0; padding-bottom: 18px; }
+    th, td { font-size: 0.75rem; }
+  }
+
+.answer-reveal {
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--correct-fg);
+  background: var(--correct-bg);
+  border: 1px solid var(--correct-fg);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.answer-reveal::before { content: "\2713 "; }
+td .answer-reveal { display: block; margin: 3px 0 0; }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Make Sentences – 2</h1>
+  <div class="card">
+<div class="prompt-list"><div class="sentence-item"><div class="given">a) There the are students sitting on chairs. three</div><input class="line blank" data-answer="There are three students sitting on chairs."></div><div class="sentence-item"><div class="given">b) is to She the window. going</div><input class="line blank" data-answer="She is going to the window."></div><div class="sentence-item"><div class="given">c) under her money is book. The</div><input class="line blank" data-answer="The book is under her money."></div><div class="sentence-item"><div class="given">d) you Are a suit blue wearing?</div><input class="line blank" data-answer="Are you wearing a blue suit?"></div><div class="sentence-item"><div class="given">e) books Are any on there the table?</div><input class="line blank" data-answer="Are there any books on the table?"></div></div>
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ');
+}
+function clearReveal(el) {
+  const next = el.nextElementSibling;
+  if (next && next.classList && next.classList.contains('answer-reveal')) next.remove();
+}
+function showReveal(el, text) {
+  clearReveal(el);
+  const span = document.createElement('span');
+  span.className = 'answer-reveal';
+  span.textContent = text;
+  el.insertAdjacentElement('afterend', span);
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  let total = 0, correct = 0;
+
+  const inputs = document.querySelectorAll('input.blank[data-answer], input.line[data-answer]');
+  inputs.forEach(input => {
+    total++;
+    const rawCandidates = input.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    if (candidates.includes(userVal)) { input.classList.add('correct'); correct++; }
+    else { input.classList.add('incorrect'); showReveal(input, rawCandidates.join(' / ')); }
+    input.disabled = true;
+  });
+
+  const selects = document.querySelectorAll('select.blank[data-answer]');
+  selects.forEach(sel => {
+    total++;
+    const rawCandidates = sel.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(sel.value);
+    sel.classList.remove('correct', 'incorrect');
+    clearReveal(sel);
+    if (candidates.includes(userVal)) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('incorrect'); showReveal(sel, rawCandidates.join(' / ')); }
+    sel.disabled = true;
+  });
+
+  const choiceGroups = document.querySelectorAll('[data-choice-correct]');
+  choiceGroups.forEach(group => {
+    total++;
+    const correctVal = group.dataset.choiceCorrect;
+    const selected = group.querySelector('.choice-btn.selected');
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('correct','incorrect'));
+    if (selected && selected.dataset.value === correctVal) {
+      selected.classList.add('correct');
+      correct++;
+    } else {
+      if (selected) selected.classList.add('incorrect');
+      group.querySelectorAll('.choice-btn').forEach(btn => { if (btn.dataset.value === correctVal) btn.classList.add('correct'); });
+    }
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.style.pointerEvents = 'none');
+  });
+
+  const wordbags = document.querySelectorAll('input.line[data-words]');
+  wordbags.forEach(input => {
+    total++;
+    const required = JSON.parse(input.dataset.words).map(normalize).sort();
+    const userWords = normalize(input.value).replace(/[.,!?;:()]/g, '').split(' ').filter(Boolean).sort();
+    const reqClean = required.map(w => w.replace(/[.,!?;:()]/g, ''));
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    const match = JSON.stringify(userWords) === JSON.stringify(reqClean.sort());
+    if (match) { input.classList.add('correct'); correct++; }
+    else {
+      const sample = input.dataset.sample || JSON.parse(input.dataset.words).join(' ');
+      showReveal(input, sample);
+    }
+    input.disabled = true;
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + total;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+document.querySelectorAll('[data-choice-correct]').forEach(group => {
+  group.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+});
+</script>
+</body>
+</html>

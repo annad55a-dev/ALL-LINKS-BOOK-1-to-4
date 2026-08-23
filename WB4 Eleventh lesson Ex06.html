@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eleventh Lesson - Exercise 06</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --t-text: #1B5E20;
+    --t-card: #E8F5E9;
+    --t-border: #A5D6A7;
+    --t-accent: #388E3C;
+    --correct-fg: #2E7D32;
+    --incorrect-fg: #C62828;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--t-text);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--t-text);
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .card {
+    background: var(--t-card);
+    border: 2px solid var(--t-border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .reveal-answer { font-size: 0.8rem; font-weight: 600; color: var(--incorrect-fg); margin-top: 4px; min-height: 1.1em; }
+  .reveal-inline { display: inline-block; font-size: 0.76rem; font-weight: 700; color: var(--incorrect-fg); margin-left: 6px; }
+  input.line {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--t-border);
+    background: transparent;
+    color: var(--t-text);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--t-accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.inline {
+    font-family: 'Poppins', sans-serif;
+    width: 90px;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--t-border);
+    background: transparent;
+    color: var(--t-text);
+    font-weight: 600;
+    text-align: center;
+  }
+  input.inline:focus { outline: none; border-bottom-color: var(--t-accent); }
+  input.inline.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.inline.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .sentence-item { margin-bottom: 16px; font-weight: 700; }
+  .sentence-item .given { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+  .sentence-item .num { color: var(--t-accent); margin-right: 4px; }
+  .two-col { display: flex; gap: 28px; }
+  .col { flex: 1; }
+  .col.split { border-right: 2px solid var(--t-border); padding-right: 28px; }
+  .col-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
+  .example { font-style: italic; font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; opacity: 0.85; }
+  .grid-item { margin-bottom: 12px; font-weight: 700; font-size: 0.92rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 0.85rem; font-weight: 800; padding-bottom: 8px; border-bottom: 2px solid var(--t-border); text-transform: uppercase; }
+  td { padding: 10px 6px; font-weight: 700; font-size: 0.9rem; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--t-text);
+  }
+  button.reset-btn { background: var(--t-accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--t-text); }
+  @media (max-width: 640px) {
+    .two-col { flex-direction: column; }
+    .col.split { border-right: none; border-bottom: 2px solid var(--t-border); padding-right: 0; padding-bottom: 18px; }
+  }
+</style>
+
+</head>
+<body>
+<div class="card-container">
+  <h1>Eleventh Lesson - Exercise 06</h1>
+  <div class="card">
+
+  <div class="note" style="text-align:center;font-weight:600;font-size:0.85rem;margin-bottom:16px;">Complete with the missing words:</div>
+  <p class="cloze-text"><input class="inline" data-answer="In"> different countries people celebrate weddings in different places, such <input class="inline" data-answer="as">, churches, temples, synagogues, etc. On the wedding day <input class="inline" data-answer="the"> woman is the bride, <input class="inline" data-answer="while"> the man is the groom. My friend Marina is <input class="inline" data-answer="from"> Spain; she had a <input class="inline" data-answer="very"> different wedding – she celebrated <input class="inline" data-answer="it"> on the beach. She was beautiful wearing <input class="inline" data-answer="a"> simple white dress and the groom was <input class="inline" data-answer="also"> wearing a simple white suit.</p>
+
+
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.!]+$/, '')
+    .replace(/\s+/g, ' ');
+}
+function clearReveal(input) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) reveal.textContent = '';
+  const inline = input.nextElementSibling;
+  if (inline && inline.classList && inline.classList.contains('reveal-inline')) inline.textContent = '';
+}
+function showReveal(input, text) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) { reveal.textContent = text; return; }
+  let inline = input.nextElementSibling;
+  if (!inline || !inline.classList || !inline.classList.contains('reveal-inline')) {
+    inline = document.createElement('span');
+    inline.className = 'reveal-inline';
+    input.insertAdjacentElement('afterend', inline);
+  }
+  inline.textContent = text;
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.line[data-answer], .line[data-pattern], .inline[data-answer], .inline[data-pattern]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    let isCorrect = false;
+    let rawCandidates = null;
+
+    if (input.dataset.pattern) {
+      isCorrect = new RegExp(input.dataset.pattern, 'i').test(userVal);
+    } else {
+      rawCandidates = input.dataset.answer.split('||').map(s => s.trim());
+      const candidates = rawCandidates.map(normalize);
+      isCorrect = candidates.includes(userVal);
+    }
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correct++;
+      clearReveal(input);
+    } else {
+      input.classList.add('incorrect');
+      if (input.dataset.pattern) {
+        showReveal(input, 'e.g. ' + input.dataset.hint);
+      } else {
+        showReveal(input, 'Correct answer: ' + rawCandidates[0] + '.');
+      }
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

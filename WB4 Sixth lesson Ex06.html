@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sixth Lesson - Exercise 06</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --t-text: #1B5E20;
+    --t-card: #E8F5E9;
+    --t-border: #A5D6A7;
+    --t-accent: #388E3C;
+    --correct-fg: #2E7D32;
+    --incorrect-fg: #C62828;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--t-text);
+  }
+  .card-container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center;
+    color: var(--t-text);
+    font-weight: 800;
+    font-size: 1.3rem;
+    letter-spacing: 0.4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+  .card {
+    background: var(--t-card);
+    border: 2px solid var(--t-border);
+    border-radius: 20px;
+    padding: 22px 28px;
+  }
+  .reveal-answer { font-size: 0.8rem; font-weight: 600; color: var(--incorrect-fg); margin-top: 4px; min-height: 1.1em; }
+  .reveal-inline { display: inline-block; font-size: 0.76rem; font-weight: 700; color: var(--incorrect-fg); margin-left: 6px; }
+  input.line {
+    font-family: 'Poppins', sans-serif;
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--t-border);
+    background: transparent;
+    color: var(--t-text);
+    font-weight: 600;
+  }
+  input.line:focus { outline: none; border-bottom-color: var(--t-accent); }
+  input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  input.inline {
+    font-family: 'Poppins', sans-serif;
+    width: 90px;
+    padding: 2px 6px;
+    font-size: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--t-border);
+    background: transparent;
+    color: var(--t-text);
+    font-weight: 600;
+    text-align: center;
+  }
+  input.inline:focus { outline: none; border-bottom-color: var(--t-accent); }
+  input.inline.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+  input.inline.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+  .sentence-item { margin-bottom: 16px; font-weight: 700; }
+  .sentence-item .given { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; }
+  .sentence-item .num { color: var(--t-accent); margin-right: 4px; }
+  .two-col { display: flex; gap: 28px; }
+  .col { flex: 1; }
+  .col.split { border-right: 2px solid var(--t-border); padding-right: 28px; }
+  .col-title { font-weight: 800; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
+  .example { font-style: italic; font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; opacity: 0.85; }
+  .grid-item { margin-bottom: 12px; font-weight: 700; font-size: 0.92rem; }
+  table { width: 100%; border-collapse: collapse; }
+  th { text-align: left; font-size: 0.85rem; font-weight: 800; padding-bottom: 8px; border-bottom: 2px solid var(--t-border); text-transform: uppercase; }
+  td { padding: 10px 6px; font-weight: 700; font-size: 0.9rem; }
+  .controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+  button.action-btn {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 10px 26px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--t-text);
+  }
+  button.reset-btn { background: var(--t-accent); }
+  button.action-btn:hover { opacity: 0.9; }
+  #score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--t-text); }
+  @media (max-width: 640px) {
+    .two-col { flex-direction: column; }
+    .col.split { border-right: none; border-bottom: 2px solid var(--t-border); padding-right: 0; padding-bottom: 18px; }
+  }
+</style>
+
+</head>
+<body>
+<div class="card-container">
+  <h1>Sixth Lesson - Exercise 06</h1>
+  <div class="card">
+
+
+  <div class="note" style="text-align:center;font-weight:600;font-size:0.85rem;margin-bottom:10px;">
+    Have you got these things? a dog, a cat, a guitar, a piano, a French dictionary, a camera, a bicycle, a blue T-shirt, a tablet,
+    a mobile phone, a pair of trainers, a garden, a calculator, a house, a motorbike, and a computer.<br>
+    Write one sentence with each of the above words, beginning with "I've got ..." or "I haven't got ...".
+  </div>
+    <div class="sentence-item"><div class="given"><span class="num">1.</span>I've got a dog. <span style="opacity:0.7;font-weight:500;">(example)</span></div></div>
+    <div class="sentence-item"><div class="given"><span class="num">2.</span>I haven't got a cat. <span style="opacity:0.7;font-weight:500;">(example)</span></div></div>
+    <div class="sentence-item">
+      <div class="given"><span class="num">3.</span>I've got / I haven't got a guitar.</div>
+      <input class="line" data-pattern="^i.*(guitar)" data-hint="I've got a guitar. / I haven't got a guitar.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">4.</span>I've got / I haven't got a piano.</div>
+      <input class="line" data-pattern="^i.*(piano)" data-hint="I've got a piano. / I haven't got a piano.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">5.</span>I've got / I haven't got a French dictionary.</div>
+      <input class="line" data-pattern="^i.*(dictionary)" data-hint="I've got a French dictionary. / I haven't got a French dictionary.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">6.</span>I've got / I haven't got a camera.</div>
+      <input class="line" data-pattern="^i.*(camera)" data-hint="I've got a camera. / I haven't got a camera.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">7.</span>I've got / I haven't got a bicycle.</div>
+      <input class="line" data-pattern="^i.*(bicycle)" data-hint="I've got a bicycle. / I haven't got a bicycle.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">8.</span>I've got / I haven't got a blue T-shirt.</div>
+      <input class="line" data-pattern="^i.*(t.?shirt)" data-hint="I've got a blue T-shirt. / I haven't got a blue T-shirt.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">9.</span>I've got / I haven't got a tablet.</div>
+      <input class="line" data-pattern="^i.*(tablet)" data-hint="I've got a tablet. / I haven't got a tablet.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">10.</span>I've got / I haven't got a mobile phone.</div>
+      <input class="line" data-pattern="^i.*(mobile|phone)" data-hint="I've got a mobile phone. / I haven't got a mobile phone.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">11.</span>I've got / I haven't got a a pair of trainers.</div>
+      <input class="line" data-pattern="^i.*(trainers)" data-hint="I've got a a pair of trainers. / I haven't got a a pair of trainers.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">12.</span>I've got / I haven't got a garden.</div>
+      <input class="line" data-pattern="^i.*(garden)" data-hint="I've got a garden. / I haven't got a garden.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">13.</span>I've got / I haven't got a calculator.</div>
+      <input class="line" data-pattern="^i.*(calculator)" data-hint="I've got a calculator. / I haven't got a calculator.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">14.</span>I've got / I haven't got a house.</div>
+      <input class="line" data-pattern="^i.*(house)" data-hint="I've got a house. / I haven't got a house.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">15.</span>I've got / I haven't got a motorbike.</div>
+      <input class="line" data-pattern="^i.*(motorbike)" data-hint="I've got a motorbike. / I haven't got a motorbike.">
+      <div class="reveal-answer"></div>
+    </div>
+
+    <div class="sentence-item">
+      <div class="given"><span class="num">16.</span>I've got / I haven't got a computer.</div>
+      <input class="line" data-pattern="^i.*(computer)" data-hint="I've got a computer. / I haven't got a computer.">
+      <div class="reveal-answer"></div>
+    </div>
+
+
+
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.!]+$/, '')
+    .replace(/\s+/g, ' ');
+}
+function clearReveal(input) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) reveal.textContent = '';
+  const inline = input.nextElementSibling;
+  if (inline && inline.classList && inline.classList.contains('reveal-inline')) inline.textContent = '';
+}
+function showReveal(input, text) {
+  const reveal = input.parentElement.querySelector('.reveal-answer');
+  if (reveal) { reveal.textContent = text; return; }
+  let inline = input.nextElementSibling;
+  if (!inline || !inline.classList || !inline.classList.contains('reveal-inline')) {
+    inline = document.createElement('span');
+    inline.className = 'reveal-inline';
+    input.insertAdjacentElement('afterend', inline);
+  }
+  inline.textContent = text;
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  const inputs = document.querySelectorAll('.line[data-answer], .line[data-pattern], .inline[data-answer], .inline[data-pattern]');
+  let correct = 0;
+  inputs.forEach(input => {
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    let isCorrect = false;
+    let rawCandidates = null;
+
+    if (input.dataset.pattern) {
+      isCorrect = new RegExp(input.dataset.pattern, 'i').test(userVal);
+    } else {
+      rawCandidates = input.dataset.answer.split('||').map(s => s.trim());
+      const candidates = rawCandidates.map(normalize);
+      isCorrect = candidates.includes(userVal);
+    }
+
+    if (isCorrect) {
+      input.classList.add('correct');
+      correct++;
+      clearReveal(input);
+    } else {
+      input.classList.add('incorrect');
+      if (input.dataset.pattern) {
+        showReveal(input, 'e.g. ' + input.dataset.hint);
+      } else {
+        showReveal(input, 'Correct answer: ' + rawCandidates[0] + '.');
+      }
+    }
+    input.disabled = true;
+  });
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + inputs.length;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+</script>
+</body>
+</html>

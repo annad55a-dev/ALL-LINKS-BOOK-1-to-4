@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercises</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+:root {
+  --navy: #7A2331;
+  --accent: #B94A5A;
+  --light: #FBE9EA;
+  --border: #EFC4C9;
+  --correct-fg: #2E7D32;
+  --correct-bg: #E8F5E9;
+  --incorrect-fg: #C62828;
+  --incorrect-bg: #FDECEA;
+}
+
+
+* { box-sizing: border-box; }
+body {
+  font-family: 'Baloo 2', sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 24px 16px 60px;
+  color: var(--navy);
+}
+.card-container { max-width: 900px; margin: 0 auto; }
+h1 {
+  text-align: center;
+  color: var(--navy);
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  letter-spacing: 0.3px;
+}
+.card {
+  background: var(--light);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 22px 28px;
+  margin-bottom: 22px;
+}
+.subtitle { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin: 0 0 14px; text-align:center; }
+.section-title { font-weight: 700; color: var(--navy); font-size: 1.05rem; margin: 4px 0 12px; text-align:center; }
+.instructions { font-weight: 600; color: var(--accent); font-size: 0.85rem; margin: 0 0 14px; text-align:center; }
+.rule-list { margin: 0 0 16px; padding-left: 20px; }
+.rule-list li { font-weight: 700; color: var(--navy); font-size: 0.88rem; margin-bottom: 4px; }
+.two-col { display: flex; gap: 28px; }
+.col { flex: 1; }
+.col.split { border-right: 2px solid var(--border); padding-right: 28px; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--navy);
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  text-align: center;
+  padding: 9px 4px;
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.9rem;
+}
+td.accent { color: var(--accent); }
+.prompt-list p {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin: 14px 0 4px;
+}
+.paragraph {
+  font-size: 1rem;
+  line-height: 2.6;
+  color: var(--navy);
+  font-weight: 600;
+}
+input.blank, textarea.blank, select.blank {
+  font-family: 'Baloo 2', sans-serif;
+  width: 100%;
+  min-width: 70px;
+  max-width: 220px;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  text-align: center;
+  color: var(--navy);
+  font-weight: 700;
+}
+input.blank:focus, textarea.blank:focus, select.blank:focus { outline: none; border-bottom-color: var(--accent); }
+input.blank.correct, textarea.blank.correct, select.blank.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+input.blank.incorrect, textarea.blank.incorrect, select.blank.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+input.free {
+  font-family: 'Baloo 2', sans-serif;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.85rem;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  text-align: center;
+  color: var(--navy);
+  font-weight: 700;
+}
+input.free:focus { outline: none; border-bottom-color: var(--accent); }
+input.line {
+  font-family: 'Baloo 2', sans-serif;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  color: var(--navy);
+  font-weight: 600;
+}
+input.line:focus { outline: none; border-bottom-color: var(--accent); }
+input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+.sentence-item { margin-bottom: 16px; }
+.sentence-item .scramble { font-weight: 600; color: var(--accent); font-size: 0.9rem; margin-bottom: 6px; font-style: italic; }
+.sentence-item .given { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 4px; }
+.item-row { display:flex; align-items:center; gap: 10px; margin-bottom: 10px; }
+.item-row .label { font-weight: 700; color: var(--navy); font-size: 0.9rem; min-width: 26px; }
+.dialogue-item { margin-bottom: 16px; }
+.dialogue-item .qa { font-weight: 700; color: var(--navy); font-size: 0.95rem; margin-bottom: 6px; display:flex; align-items:center; gap:8px; flex-wrap: wrap; }
+.dialogue-item .speaker { color: var(--accent); min-width: 20px; }
+.lines-block { display: flex; flex-direction: column; gap: 22px; }
+.lines-block .rule { border-bottom: 1px solid var(--border); height: 1px; }
+.controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+button.action-btn {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 26px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: var(--navy);
+}
+button.reset-btn { background: var(--accent); }
+button.action-btn:hover { opacity: 0.9; }
+#score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--navy); }
+.note { text-align:center; font-size:0.8rem; color: var(--accent); font-weight:600; margin-top: 10px;}
+@media (max-width: 640px) {
+  .two-col { flex-direction: column; }
+  .col.split { border-right: none; border-bottom: 2px solid var(--border); padding-right: 0; padding-bottom: 18px; }
+  th, td { font-size: 0.75rem; }
+}
+
+
+    .word-bank { border: 2px solid var(--border); border-radius: 14px; padding: 14px 20px; margin: 0 0 20px; text-align: center; font-weight: 700; color: var(--navy); font-size: 0.9rem; line-height: 1.9; }
+    .word-bank s { color: var(--accent); opacity: 0.6; }
+    
+
+.answer-reveal {
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--correct-fg);
+  background: var(--correct-bg);
+  border: 1px solid var(--correct-fg);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.answer-reveal::before { content: "\2713 "; }
+td .answer-reveal { display: block; margin: 3px 0 0; }
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Exercises</h1>
+
+  <div class="card">
+    <p class="instructions">Complete the text with the words and expressions from the below box.</p>
+    <div class="word-bank">Always &middot; <s>beautiful</s> &middot; green &middot; each other &middot; forget &middot; <s>girlfriend</s> &middot; is doing &middot; laughed &middot; listen to &middot; long fair &middot; neither...nor &middot; nose &middot; person &middot; quite &middot; smile &middot; tired &middot; worked &middot; her</div>
+    <p class="paragraph">My first real <u>girlfriend</u> was a very <u>beautiful</u> girl called Pauline. She was <input class="blank" data-answer="quite" style="width:110px;display:inline-block;"> tall, <input class="blank" data-answer="neither" style="width:110px;display:inline-block;"> slim <input class="blank" data-answer="nor" style="width:110px;display:inline-block;"> fat, with a lovely figure. She had <input class="blank" data-answer="long fair" style="width:110px;display:inline-block;"> hair and <input class="blank" data-answer="green" style="width:110px;display:inline-block;"> eyes, a funny short <input class="blank" data-answer="nose" style="width:110px;display:inline-block;">, and a wide mouth with a wonderful <input class="blank" data-answer="smile" style="width:110px;display:inline-block;">, like the sun coming out in the morning. Her voice was soft and nice to <input class="blank" data-answer="listen to" style="width:120px;display:inline-block;">. She had a great sense of humour, and we <input class="blank" data-answer="laughed" style="width:110px;display:inline-block;"> a lot. At nights she <input class="blank" data-answer="worked" style="width:110px;display:inline-block;"> as a computer support in a big company, and she was often very <input class="blank" data-answer="tired" style="width:110px;display:inline-block;"> when we saw <input class="blank" data-answer="each other" style="width:120px;display:inline-block;">, but she was <input class="blank" data-answer="always" style="width:110px;display:inline-block;"> fun to be with. She was a very talented actress, and I will never <input class="blank" data-answer="forget" style="width:110px;display:inline-block;"> her acting on a stage. Pauline was a lovely <input class="blank" data-answer="person" style="width:110px;display:inline-block;">, and I was lucky to know <input class="blank" data-answer="her" style="width:110px;display:inline-block;">. I often wonder what she <input class="blank" data-answer="is doing" style="width:110px;display:inline-block;"> now.</p>
+  </div>
+
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ').replace(/[.,!?]+$/,'');
+}
+function clearReveal(el) {
+  const next = el.nextElementSibling;
+  if (next && next.classList && next.classList.contains('answer-reveal')) next.remove();
+}
+function showReveal(el, text) {
+  clearReveal(el);
+  const span = document.createElement('span');
+  span.className = 'answer-reveal';
+  span.textContent = text;
+  el.insertAdjacentElement('afterend', span);
+}
+var checkBtn = document.getElementById('check-btn');
+if (checkBtn) {
+  checkBtn.addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.blank[data-answer], .blank[data-pattern]');
+    let correct = 0;
+    inputs.forEach(input => {
+      input.classList.remove('correct', 'incorrect');
+      clearReveal(input);
+      let isCorrect = false;
+      if (input.dataset.pattern) {
+        const re = new RegExp(input.dataset.pattern, 'i');
+        isCorrect = re.test(input.value.trim());
+      } else {
+        const candidates = input.dataset.answer.split('||').map(normalize);
+        const userVal = normalize(input.value);
+        isCorrect = candidates.includes(userVal);
+      }
+      if (isCorrect) {
+        input.classList.add('correct');
+        correct++;
+      } else {
+        input.classList.add('incorrect');
+        if (input.dataset.pattern) {
+          if (input.dataset.hint) showReveal(input, 'e.g. ' + input.dataset.hint);
+        } else {
+          showReveal(input, input.dataset.answer.split('||').join(' / '));
+        }
+      }
+      input.disabled = true;
+    });
+    const summary = document.getElementById('score-summary');
+    if (summary) summary.textContent = 'Score: ' + correct + ' / ' + inputs.length;
+  });
+}
+var resetBtn = document.getElementById('reset-btn');
+if (resetBtn) {
+  resetBtn.addEventListener('click', () => location.reload());
+}
+</script>
+</body>
+</html>

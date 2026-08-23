@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 2 - Lesson 3 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #37016A;
+    --blue: #6B3FA0;
+    --light-blue: #F3EAFB;
+    --blue-border: #C7A9E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--blue-border);
+  }
+
+  .option-pill.selected {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--blue-border);
+    border-radius: 10px;
+    color: var(--navy);
+    background: var(--light-blue);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 2 - Lesson 3 Quiz</h1>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 3,
+  "title": "Book 2 - Lesson 3 Quiz",
+  "sections": [
+    {
+      "name": "Any, Some, Many, Countable & Uncountable",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Algum/a' (interrogativo/negativo)?",
+          "correct": [
+            "Any"
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Algum/a' (positivo)?",
+          "correct": [
+            "Some"
+          ]
+        },
+        {
+          "id": "q3",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Muitos/as'?",
+          "correct": [
+            "Many"
+          ]
+        },
+        {
+          "id": "q4",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Contável'?",
+          "correct": [
+            "Countable"
+          ]
+        },
+        {
+          "id": "q5",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Incontável'?",
+          "correct": [
+            "Uncountable"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kitchen & Storage Vocabulary",
+      "questions": [
+        {
+          "id": "q6",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'kitchen'?",
+          "options": [
+            "Congelador",
+            "Cozinha",
+            "Despensa",
+            "Geladeira"
+          ],
+          "correct": "Cozinha"
+        },
+        {
+          "id": "q7",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'cupboard'?",
+          "options": [
+            "Despensa",
+            "Prateleira",
+            "Garrafa",
+            "Armário de cozinha/banheiro"
+          ],
+          "correct": "Armário de cozinha/banheiro"
+        },
+        {
+          "id": "q8",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'pantry'?",
+          "options": [
+            "Geladeira",
+            "Despensa",
+            "Cozinha",
+            "Congelador"
+          ],
+          "correct": "Despensa"
+        },
+        {
+          "id": "q9",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'bottle'?",
+          "options": [
+            "Garrafa",
+            "Armário de cozinha/banheiro",
+            "Cozinha",
+            "Prateleira"
+          ],
+          "correct": "Garrafa"
+        },
+        {
+          "id": "q10",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'fridge'?",
+          "options": [
+            "Garrafa",
+            "Congelador",
+            "Geladeira",
+            "Despensa"
+          ],
+          "correct": "Geladeira"
+        },
+        {
+          "id": "q11",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'freezer'?",
+          "options": [
+            "Cozinha",
+            "Geladeira",
+            "Congelador",
+            "Prateleira"
+          ],
+          "correct": "Congelador"
+        },
+        {
+          "id": "q12",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'shelf'?",
+          "options": [
+            "Congelador",
+            "Garrafa",
+            "Despensa",
+            "Prateleira"
+          ],
+          "correct": "Prateleira"
+        }
+      ]
+    },
+    {
+      "name": "Food & Drink Vocabulary",
+      "questions": [
+        {
+          "id": "q13",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Arroz'?",
+          "correct": [
+            "Rice"
+          ]
+        },
+        {
+          "id": "q14",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Açúcar'?",
+          "correct": [
+            "Sugar"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Café'?",
+          "correct": [
+            "Coffee"
+          ]
+        },
+        {
+          "id": "q16",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Leite'?",
+          "correct": [
+            "Milk"
+          ]
+        },
+        {
+          "id": "q17",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Massa'?",
+          "correct": [
+            "Pasta"
+          ]
+        },
+        {
+          "id": "q18",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Suco'?",
+          "correct": [
+            "Juice"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Some or Any? Complete the Dialogue",
+      "questions": [
+        {
+          "id": "q19",
+          "type": "fill_blank",
+          "prompt": "A: Is there ______ coffee in the flask?",
+          "correct": [
+            "any"
+          ]
+        },
+        {
+          "id": "q20",
+          "type": "fill_blank",
+          "prompt": "B: No, there isn't ______ coffee,",
+          "correct": [
+            "any"
+          ]
+        },
+        {
+          "id": "q21",
+          "type": "fill_blank",
+          "prompt": "but there's ______ juice in the fridge.",
+          "correct": [
+            "some"
+          ]
+        },
+        {
+          "id": "q22",
+          "type": "fill_blank",
+          "prompt": "A: Are there ______ glasses in the cupboard?",
+          "correct": [
+            "any"
+          ]
+        },
+        {
+          "id": "q23",
+          "type": "fill_blank",
+          "prompt": "B: Yes, there are ______ glasses on the shelf.",
+          "correct": [
+            "some"
+          ]
+        },
+        {
+          "id": "q24",
+          "type": "fill_blank",
+          "prompt": "There's also ______ sugar in the pantry,",
+          "correct": [
+            "some"
+          ]
+        },
+        {
+          "id": "q25",
+          "type": "fill_blank",
+          "prompt": "but there isn't ______ milk.",
+          "correct": [
+            "any"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Currency Vocabulary",
+      "questions": [
+        {
+          "id": "q28",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Símbolo'?",
+          "correct": [
+            "Symbol"
+          ]
+        },
+        {
+          "id": "q29",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Real' (moeda brasileira)?",
+          "correct": [
+            "Real"
+          ]
+        },
+        {
+          "id": "q30",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Dólar'?",
+          "correct": [
+            "Dollar"
+          ]
+        },
+        {
+          "id": "q31",
+          "type": "fill_blank",
+          "prompt": "What is the English phrase for 'Libra esterlina'?",
+          "correct": [
+            "Pound"
+          ]
+        },
+        {
+          "id": "q33",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Contar'?",
+          "correct": [
+            "Count"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "How Much, How Many & Kitchen Extras",
+      "questions": [
+        {
+          "id": "q34",
+          "type": "fill_blank",
+          "prompt": "What is the English phrase for 'Quanto/a'?",
+          "correct": [
+            "How much"
+          ]
+        },
+        {
+          "id": "q35",
+          "type": "fill_blank",
+          "prompt": "What is the English phrase for 'Quantos/as'?",
+          "correct": [
+            "How many"
+          ]
+        },
+        {
+          "id": "q36",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Nenhum/a'?",
+          "correct": [
+            "None"
+          ]
+        },
+        {
+          "id": "q37",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Colher de chá'?",
+          "correct": [
+            "Teaspoon"
+          ]
+        },
+        {
+          "id": "q38",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Pacote'?",
+          "correct": [
+            "Pack"
+          ]
+        },
+        {
+          "id": "q39",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Xícara'?",
+          "correct": [
+            "Cup"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Describe the Kitchen",
+      "questions": [
+        {
+          "id": "q40",
+          "type": "fill_blank",
+          "prompt": "In my kitchen, ______ fruit on the table,",
+          "correct": [
+            "there is",
+            "there's"
+          ]
+        },
+        {
+          "id": "q41",
+          "type": "fill_blank",
+          "prompt": "and ______ two bottles of juice in the fridge.",
+          "correct": [
+            "there are"
+          ]
+        },
+        {
+          "id": "q42",
+          "type": "fill_blank",
+          "prompt": "______ coffee in the cupboard,",
+          "correct": [
+            "There is",
+            "There's"
+          ]
+        },
+        {
+          "id": "q43",
+          "type": "fill_blank",
+          "prompt": "but ______ sugar left in the pantry — we need to buy more!",
+          "correct": [
+            "there isn't any"
+          ]
+        },
+        {
+          "id": "q44",
+          "type": "fill_blank",
+          "prompt": "______ cups on the shelf?",
+          "correct": [
+            "Are there any"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Make the Questions",
+      "questions": [
+        {
+          "id": "q45",
+          "type": "fill_blank",
+          "prompt": "Rewrite as a question: 'There is some milk in the fridge.'",
+          "correct": [
+            "Is there any milk in the fridge?"
+          ]
+        },
+        {
+          "id": "q46",
+          "type": "fill_blank",
+          "prompt": "Rewrite as a question: 'There are some plates in the cupboard.'",
+          "correct": [
+            "Are there any plates in the cupboard?"
+          ]
+        },
+        {
+          "id": "q47",
+          "type": "fill_blank",
+          "prompt": "Rewrite as a question: 'There is some rice in the pantry.'",
+          "correct": [
+            "Is there any rice in the pantry?"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "questions": [
+        {
+          "id": "q48",
+          "type": "multiple_choice",
+          "prompt": "Which sentence correctly uses 'some' to describe your kitchen?",
+          "options": [
+            "There is some milk are in my fridge.",
+            "Some is milk in my fridge.",
+            "There is some milk in my fridge."
+          ],
+          "correct": "There is some milk in my fridge."
+        },
+        {
+          "id": "q49",
+          "type": "multiple_choice",
+          "prompt": "Which question correctly uses 'any' to ask about your kitchen?",
+          "options": [
+            "There any bread is in the kitchen?",
+            "Is there any bread in the kitchen?",
+            "Is there some bread in the kitchen?"
+          ],
+          "correct": "Is there any bread in the kitchen?"
+        }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

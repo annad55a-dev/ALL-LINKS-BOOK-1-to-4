@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 1 - Lesson 4 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --blue: #3D6D9E;
+    --light-blue: #EDF4FC;
+    --blue-border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--blue-border);
+  }
+
+  .option-pill.selected {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--blue-border);
+    border-radius: 10px;
+    color: var(--navy);
+    background: var(--light-blue);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 1 - Lesson 4 Quiz</h1>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 4,
+  "title": "Book 1 - Lesson 4 Quiz",
+  "sections": [
+    {
+      "name": "Vocabulary",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'rubber/eraser'?",
+          "options": [
+            "Ar condicionado",
+            "Borracha",
+            "Sigla",
+            "Banqueta"
+          ],
+          "correct": "Borracha"
+        },
+        {
+          "id": "q2",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'acronym'?",
+          "options": [
+            "Borracha",
+            "Banqueta",
+            "Ar condicionado",
+            "Sigla"
+          ],
+          "correct": "Sigla"
+        },
+        {
+          "id": "q3",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'stool'?",
+          "options": [
+            "Ar condicionado",
+            "Banqueta",
+            "Sigla",
+            "Borracha"
+          ],
+          "correct": "Banqueta"
+        },
+        {
+          "id": "q4",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'air conditioning'?",
+          "options": [
+            "Sigla",
+            "Banqueta",
+            "Borracha",
+            "Ar condicionado"
+          ],
+          "correct": "Ar condicionado"
+        }
+      ]
+    },
+    {
+      "name": "Plural Pronouns",
+      "questions": [
+        {
+          "id": "q5",
+          "type": "fill_blank",
+          "prompt": "What is the English pronoun for 'Nós'?",
+          "correct": [
+            "we"
+          ]
+        },
+        {
+          "id": "q6",
+          "type": "fill_blank",
+          "prompt": "What is the English pronoun for 'Vocês'?",
+          "correct": [
+            "you"
+          ]
+        },
+        {
+          "id": "q7",
+          "type": "fill_blank",
+          "prompt": "What is the English pronoun for 'Eles/elas'?",
+          "correct": [
+            "they"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grammar: Verb To Be, Plural (Affirmative)",
+      "questions": [
+        {
+          "id": "q8",
+          "type": "fill_blank",
+          "prompt": "What is the contracted form of 'We are'?",
+          "correct": [
+            "We're"
+          ]
+        },
+        {
+          "id": "q9",
+          "type": "fill_blank",
+          "prompt": "What is the extended form of the contraction 'You're'?",
+          "correct": [
+            "You are"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "fill_blank",
+          "prompt": "What is the contracted form of 'They are'?",
+          "correct": [
+            "They're"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grammar: Verb To Be, Plural (Interrogative)",
+      "questions": [
+        {
+          "id": "q11",
+          "type": "multiple_choice",
+          "prompt": "Which is the correct question form of 'We are students'?",
+          "options": [
+            "Am we students?",
+            "Are we students?",
+            "Is we students?"
+          ],
+          "correct": "Are we students?"
+        },
+        {
+          "id": "q12",
+          "type": "multiple_choice",
+          "prompt": "Which is the correct question form of 'You are doctors'?",
+          "options": [
+            "Am you doctors?",
+            "Is you doctors?",
+            "Are you doctors?"
+          ],
+          "correct": "Are you doctors?"
+        },
+        {
+          "id": "q13",
+          "type": "multiple_choice",
+          "prompt": "Which is the correct question form of 'They are waiters'?",
+          "options": [
+            "Are they waiters?",
+            "Is they waiters?",
+            "Am they waiters?"
+          ],
+          "correct": "Are they waiters?"
+        }
+      ]
+    },
+    {
+      "name": "Grammar: Verb To Be, Plural (Negative)",
+      "questions": [
+        {
+          "id": "q14",
+          "type": "fill_blank",
+          "prompt": "Write the contracted negative form of 'We are not teachers.'",
+          "correct": [
+            "We aren't teachers.",
+            "We aren't teachers"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "fill_blank",
+          "prompt": "Write the contracted negative form of 'You are not students.'",
+          "correct": [
+            "You aren't students.",
+            "You aren't students"
+          ]
+        },
+        {
+          "id": "q16",
+          "type": "fill_blank",
+          "prompt": "Write the contracted negative form of 'They are not waiters.'",
+          "correct": [
+            "They aren't waiters.",
+            "They aren't waiters"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Prepositions: In / At / On",
+      "questions": [
+        {
+          "id": "q17",
+          "type": "fill_blank",
+          "prompt": "The children are ______ the classroom.",
+          "correct": [
+            "in"
+          ]
+        },
+        {
+          "id": "q18",
+          "type": "fill_blank",
+          "prompt": "Mr Potter is ______ home.",
+          "correct": [
+            "at"
+          ]
+        },
+        {
+          "id": "q19",
+          "type": "fill_blank",
+          "prompt": "The book is ______ the table.",
+          "correct": [
+            "on"
+          ]
+        },
+        {
+          "id": "q20",
+          "type": "fill_blank",
+          "prompt": "The children are ______ school.",
+          "correct": [
+            "at"
+          ]
+        },
+        {
+          "id": "q21",
+          "type": "fill_blank",
+          "prompt": "The dog is ______ the garden.",
+          "correct": [
+            "in"
+          ]
+        },
+        {
+          "id": "q22",
+          "type": "fill_blank",
+          "prompt": "The pen is ______ the floor.",
+          "correct": [
+            "on"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Classroom Vocabulary",
+      "questions": [
+        {
+          "id": "q23",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'pen'?",
+          "options": [
+            "Livro",
+            "Cadeira",
+            "Caneta",
+            "Lápis"
+          ],
+          "correct": "Caneta"
+        },
+        {
+          "id": "q24",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'pencil'?",
+          "options": [
+            "Lápis",
+            "Caneta",
+            "Cadeira",
+            "Chão"
+          ],
+          "correct": "Lápis"
+        },
+        {
+          "id": "q25",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'book'?",
+          "options": [
+            "Chão",
+            "Livro",
+            "Lápis",
+            "Cadeira"
+          ],
+          "correct": "Livro"
+        },
+        {
+          "id": "q26",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'chair'?",
+          "options": [
+            "Cadeira",
+            "Caneta",
+            "Chão",
+            "Livro"
+          ],
+          "correct": "Cadeira"
+        },
+        {
+          "id": "q27",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'floor'?",
+          "options": [
+            "Cadeira",
+            "Chão",
+            "Lápis",
+            "Livro"
+          ],
+          "correct": "Chão"
+        }
+      ]
+    },
+    {
+      "name": "Singular and Plural",
+      "questions": [
+        {
+          "id": "q28",
+          "type": "fill_blank",
+          "prompt": "What is the plural form of 'book'?",
+          "correct": [
+            "books"
+          ]
+        },
+        {
+          "id": "q29",
+          "type": "fill_blank",
+          "prompt": "What is the plural form of 'pen'?",
+          "correct": [
+            "pens"
+          ]
+        },
+        {
+          "id": "q30",
+          "type": "fill_blank",
+          "prompt": "What is the plural form of 'pencil'?",
+          "correct": [
+            "pencils"
+          ]
+        },
+        {
+          "id": "q31",
+          "type": "fill_blank",
+          "prompt": "What is the plural form of 'this'?",
+          "correct": [
+            "these"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "This / These",
+      "questions": [
+        {
+          "id": "q32",
+          "type": "fill_blank",
+          "prompt": "Rewrite in the plural: 'This is a pen.'",
+          "correct": [
+            "These are pens.",
+            "These are pens"
+          ]
+        },
+        {
+          "id": "q33",
+          "type": "fill_blank",
+          "prompt": "Rewrite in the plural: 'This is a book.'",
+          "correct": [
+            "These are books.",
+            "These are books"
+          ]
+        },
+        {
+          "id": "q34",
+          "type": "fill_blank",
+          "prompt": "Rewrite in the plural: 'This is a pencil.'",
+          "correct": [
+            "These are pencils.",
+            "These are pencils"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "questions": [
+        {
+          "id": "q35",
+          "type": "multiple_choice",
+          "prompt": "Which term is the British English word for the object used to remove pencil marks (American English calls it an 'eraser')?",
+          "options": [
+            "Marker",
+            "Chalk",
+            "Rubber"
+          ],
+          "correct": "Rubber"
+        },
+        {
+          "id": "q36",
+          "type": "multiple_choice",
+          "prompt": "Which sentence correctly uses the prepositions 'in', 'at', and 'on'?",
+          "options": [
+            "The pen is on the bag, she is in school, the book is at the table.",
+            "The pen is in the bag, she is at school, the book is on the table.",
+            "The pen is at the bag, she is on school, the book is in the table."
+          ],
+          "correct": "The pen is in the bag, she is at school, the book is on the table."
+        }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    if (section.note) {
+      const note = document.createElement('div');
+      note.className = 'instructions';
+      note.style.marginBottom = '16px';
+      note.textContent = section.note;
+      sectionDiv.appendChild(note);
+    }
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

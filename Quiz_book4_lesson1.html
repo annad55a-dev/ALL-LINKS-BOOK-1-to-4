@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 4 - Lesson 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #2F4F2F;
+    --accent: #6B8E23;
+    --light-green: #F4F8F0;
+    --green-border: #C8D8B9;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-green);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--dark);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--accent);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--dark);
+    color: #fff;
+    border: 2px solid var(--dark);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--green-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-green);
+    border: 2px solid var(--green-border);
+    color: var(--dark);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--green-border);
+  }
+
+  .option-pill.selected {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--green-border);
+    border-radius: 10px;
+    color: var(--dark);
+    background: var(--light-green);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--dark);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--accent);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--dark);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 4 - Lesson 1</h1>
+  <div class="instructions">Choose the correct answer for each question, then press "Check Answers".</div>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 1,
+  "title": "Book 4 - Lesson 1",
+  "sections": [
+    {
+      "name": "Too Many, Too Much, Too Few, Too Little",
+      "questions": [
+        { "id": "q1", "type": "multiple_choice", "prompt": "Complete the sentence: 'There were ___ people at the party; we couldn't move!'", "options": ["too little", "too few", "too much", "too many"], "correct": "too many" },
+        { "id": "q2", "type": "multiple_choice", "prompt": "Complete the sentence: 'I can't finish my drink; there's ___ sugar in it.'", "options": ["too many", "too few", "too much", "too little"], "correct": "too much" },
+        { "id": "q3", "type": "multiple_choice", "prompt": "Complete the sentence: 'The teacher was upset because ___ students came to class today.'", "options": ["too few", "too much", "too many", "too little"], "correct": "too few" }
+      ]
+    },
+    {
+      "name": "Too Short, Too Tall, Enough...",
+      "questions": [
+        { "id": "q4", "type": "multiple_choice", "prompt": "Complete the sentence: 'He can't reach the top shelf; he's ___.'", "options": ["too tall", "tall enough", "too short", "enough people"], "correct": "too short" },
+        { "id": "q5", "type": "multiple_choice", "prompt": "Complete the sentence: 'She's not ___ to ride the roller coaster; she needs to grow a bit more.'", "options": ["too tall", "tall enough", "too short", "enough food"], "correct": "tall enough" },
+        { "id": "q6", "type": "multiple_choice", "prompt": "Complete the sentence: 'We didn't have ___ at the party, so some guests left hungry.'", "options": ["enough people", "too tall", "fast enough", "enough food"], "correct": "enough food" }
+      ]
+    },
+    {
+      "name": "Everyday Verbs & Nouns",
+      "questions": [
+        { "id": "q7", "type": "multiple_choice", "prompt": "Complete the sentence: 'I need to ___ the top shelf, but I'm too short.'", "options": ["change", "reach", "meaning", "university"], "correct": "reach" },
+        { "id": "q8", "type": "multiple_choice", "prompt": "Complete the sentence: 'Can you ___ the light bulb? It stopped working.'", "options": ["reach", "meaning", "change", "university"], "correct": "change" },
+        { "id": "q9", "type": "multiple_choice", "prompt": "Which word describes a place where people go to study after high school?", "options": ["University", "Light bulb", "Ferrari", "Meaning"], "correct": "University" }
+      ]
+    },
+    {
+      "name": "Enough + Noun (Grammar)",
+      "questions": [
+        { "id": "q10", "type": "multiple_choice", "prompt": "Complete the sentence: 'There is ___ money in the bank to buy the car.'", "options": ["too", "enough", "too much", "too many"], "correct": "enough" },
+        { "id": "q11", "type": "multiple_choice", "prompt": "Complete the sentence: 'She has ___ milk in the fridge for the whole week.'", "options": ["too", "too little", "too few", "enough"], "correct": "enough" },
+        { "id": "q12", "type": "multiple_choice", "prompt": "Complete the sentence: 'There weren't ___ chairs in the room, so some people had to stand.'", "options": ["too", "too much", "enough", "too many"], "correct": "enough" }
+      ]
+    },
+    {
+      "name": "Too or Enough? (Adjective Patterns)",
+      "questions": [
+        { "id": "q13", "type": "multiple_choice", "prompt": "Complete the sentence: 'The tea was ___ hot to drink, so I waited a few minutes.'", "options": ["enough", "too", "fast enough", "tall enough"], "correct": "too" },
+        { "id": "q14", "type": "multiple_choice", "prompt": "Complete the sentence: 'He isn't old ___ to drive a car yet.'", "options": ["enough", "too", "too much", "too many"], "correct": "enough" },
+        { "id": "q15", "type": "multiple_choice", "prompt": "Complete the sentence: 'The film was ___ boring, so we left the cinema early.'", "options": ["enough", "fast enough", "tall enough", "too"], "correct": "too" }
+      ]
+    },
+    {
+      "name": "Was / Wasn't / There Wasn't",
+      "questions": [
+        { "id": "q16", "type": "multiple_choice", "prompt": "Complete the exchange: \"'___ there enough food at the party?' 'No, there wasn't.'\"", "options": ["Wasn't", "Was", "There wasn't", "There was"], "correct": "Was" },
+        { "id": "q17", "type": "multiple_choice", "prompt": "Complete the sentence: 'The car ___ fast enough to win the race.'", "options": ["there wasn't", "was there", "wasn't", "too"], "correct": "wasn't" },
+        { "id": "q18", "type": "multiple_choice", "prompt": "Complete the sentence: '___ enough time to finish the exam, so many students struggled.'", "options": ["Was there", "Wasn't", "Was", "There wasn't"], "correct": "There wasn't" }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

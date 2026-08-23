@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Present Simple of the Verb To Be — Affirmative (+)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --blue: #3D6D9E;
+    --light-blue: #EDF4FC;
+    --blue-border: #A9C7E8;
+    --red: #C62828;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: #fff;
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .card-container {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .card {
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    border-radius: 20px;
+    padding: 24px 32px;
+    display: flex;
+    gap: 32px;
+  }
+
+  .col {
+    flex: 1;
+  }
+
+  .col.left {
+    border-right: 2px solid var(--blue-border);
+    padding-right: 32px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--navy);
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--blue-border);
+  }
+
+  td {
+    text-align: center;
+    padding: 10px 4px;
+    font-weight: 700;
+    color: var(--navy);
+    font-size: 0.95rem;
+  }
+
+  td.contracted {
+    color: var(--red);
+  }
+
+  input.blank {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    min-width: 90px;
+    max-width: 160px;
+    padding: 6px 6px;
+    font-size: 0.85rem;
+    border: none;
+    border-bottom: 2px solid var(--blue-border);
+    background: transparent;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  input.blank:focus {
+    outline: none;
+    border-bottom-color: var(--blue);
+  }
+
+  input.blank.correct {
+    color: var(--correct-fg);
+    border-bottom-color: var(--correct-fg);
+  }
+
+  input.blank.incorrect {
+    color: var(--incorrect-fg);
+    border-bottom-color: var(--incorrect-fg);
+  }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 10px 28px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    color: var(--navy);
+  }
+
+  @media (max-width: 640px) {
+    .card {
+      flex-direction: column;
+      padding: 20px 16px;
+    }
+    .col.left {
+      border-right: none;
+      border-bottom: 2px solid var(--blue-border);
+      padding-right: 0;
+      padding-bottom: 20px;
+    }
+    th, td {
+      font-size: 0.8rem;
+    }
+    input.blank {
+      min-width: 70px;
+      font-size: 0.8rem;
+    }
+  }
+
+.answer-reveal {
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--correct-fg);
+  background: var(--correct-bg);
+  border: 1px solid var(--correct-fg);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.answer-reveal::before { content: "\2713 "; }
+td .answer-reveal { display: block; margin: 3px 0 0; }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+  <h1>THE PRESENT SIMPLE OF THE VERB TO BE — AFFIRMATIVE (+)</h1>
+
+  <div class="card">
+    <div class="col left">
+      <table>
+        <tr><th>Present Simple – TO BE</th><th>Copy</th></tr>
+        <tr><td>I am</td><td><input class="blank" data-answer="I am" data-id="l1"></td></tr>
+        <tr><td>You are</td><td><input class="blank" data-answer="You are" data-id="l2"></td></tr>
+        <tr><td>He is</td><td><input class="blank" data-answer="He is" data-id="l3"></td></tr>
+        <tr><td>She is</td><td><input class="blank" data-answer="She is" data-id="l4"></td></tr>
+        <tr><td>It is</td><td><input class="blank" data-answer="It is" data-id="l5"></td></tr>
+      </table>
+    </div>
+    <div class="col right">
+      <table>
+        <tr><th>Extended</th><th>Copy</th><th>Contracted</th><th>Copy</th></tr>
+        <tr>
+          <td>I am</td>
+          <td><input class="blank" data-answer="I am" data-id="r1e"></td>
+          <td class="contracted">I'm</td>
+          <td><input class="blank" data-answer="I'm" data-id="r1c"></td>
+        </tr>
+        <tr>
+          <td>You are</td>
+          <td><input class="blank" data-answer="You are" data-id="r2e"></td>
+          <td class="contracted">You're</td>
+          <td><input class="blank" data-answer="You're" data-id="r2c"></td>
+        </tr>
+        <tr>
+          <td>He is</td>
+          <td><input class="blank" data-answer="He is" data-id="r3e"></td>
+          <td class="contracted">He's</td>
+          <td><input class="blank" data-answer="He's" data-id="r3c"></td>
+        </tr>
+        <tr>
+          <td>She is</td>
+          <td><input class="blank" data-answer="She is" data-id="r4e"></td>
+          <td class="contracted">She's</td>
+          <td><input class="blank" data-answer="She's" data-id="r4c"></td>
+        </tr>
+        <tr>
+          <td>It is</td>
+          <td><input class="blank" data-answer="It is" data-id="r5e"></td>
+          <td class="contracted">It's</td>
+          <td><input class="blank" data-answer="It's" data-id="r5c"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ');
+}
+function clearReveal(el) {
+  const next = el.nextElementSibling;
+  if (next && next.classList && next.classList.contains('answer-reveal')) next.remove();
+}
+function showReveal(el, text) {
+  clearReveal(el);
+  const span = document.createElement('span');
+  span.className = 'answer-reveal';
+  span.textContent = text;
+  el.insertAdjacentElement('afterend', span);
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  let total = 0, correct = 0;
+
+  const inputs = document.querySelectorAll('input.blank[data-answer], input.line[data-answer]');
+  inputs.forEach(input => {
+    total++;
+    const rawCandidates = input.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    if (candidates.includes(userVal)) { input.classList.add('correct'); correct++; }
+    else { input.classList.add('incorrect'); showReveal(input, rawCandidates.join(' / ')); }
+    input.disabled = true;
+  });
+
+  const selects = document.querySelectorAll('select.blank[data-answer]');
+  selects.forEach(sel => {
+    total++;
+    const rawCandidates = sel.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(sel.value);
+    sel.classList.remove('correct', 'incorrect');
+    clearReveal(sel);
+    if (candidates.includes(userVal)) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('incorrect'); showReveal(sel, rawCandidates.join(' / ')); }
+    sel.disabled = true;
+  });
+
+  const choiceGroups = document.querySelectorAll('[data-choice-correct]');
+  choiceGroups.forEach(group => {
+    total++;
+    const correctVal = group.dataset.choiceCorrect;
+    const selected = group.querySelector('.choice-btn.selected');
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('correct','incorrect'));
+    if (selected && selected.dataset.value === correctVal) {
+      selected.classList.add('correct');
+      correct++;
+    } else {
+      if (selected) selected.classList.add('incorrect');
+      group.querySelectorAll('.choice-btn').forEach(btn => { if (btn.dataset.value === correctVal) btn.classList.add('correct'); });
+    }
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.style.pointerEvents = 'none');
+  });
+
+  const wordbags = document.querySelectorAll('input.line[data-words]');
+  wordbags.forEach(input => {
+    total++;
+    const required = JSON.parse(input.dataset.words).map(normalize).sort();
+    const userWords = normalize(input.value).replace(/[.,!?;:()]/g, '').split(' ').filter(Boolean).sort();
+    const reqClean = required.map(w => w.replace(/[.,!?;:()]/g, ''));
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    const match = JSON.stringify(userWords) === JSON.stringify(reqClean.sort());
+    if (match) { input.classList.add('correct'); correct++; }
+    else {
+      const sample = input.dataset.sample || JSON.parse(input.dataset.words).join(' ');
+      showReveal(input, sample);
+    }
+    input.disabled = true;
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + total;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+document.querySelectorAll('[data-choice-correct]').forEach(group => {
+  group.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+});
+</script>
+
+</body>
+</html>

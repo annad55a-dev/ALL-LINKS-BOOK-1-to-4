@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complete with &quot;A FEW&quot;, &quot;A LITTLE&quot;, &quot;FEW&quot; or &quot;LITTLE&quot;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #8A6300;
+  --accent: #D9A400;
+  --light: #FFF8E1;
+  --border: #F2D583;
+  --correct-fg: #2E7D32;
+  --correct-bg: #E8F5E9;
+  --incorrect-fg: #C62828;
+  --incorrect-bg: #FDECEA;
+}
+* { box-sizing: border-box; }
+body {
+  font-family: 'Baloo 2', sans-serif;
+  background: #fff;
+  margin: 0;
+  padding: 24px 16px 60px;
+  color: var(--gold);
+}
+.card-container { max-width: 900px; margin: 0 auto; }
+h1 {
+  text-align: center;
+  color: var(--gold);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  letter-spacing: 0.3px;
+}
+.subtitle-top {
+  text-align: center;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+.card {
+  background: var(--light);
+  border: 2px solid var(--border);
+  border-radius: 20px;
+  padding: 22px 28px;
+}
+.two-col { display: flex; gap: 28px; }
+.col { flex: 1; min-width: 0; }
+.col.split { border-right: 2px solid var(--border); padding-right: 28px; }
+.col-title { text-align:center; font-weight:700; color:var(--gold); font-size:0.9rem; letter-spacing:0.5px; margin: 0 0 12px; border-bottom:2px solid var(--border); padding-bottom:8px; }
+table { width: 100%; border-collapse: collapse; }
+th {
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.4px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
+}
+td {
+  text-align: center;
+  padding: 9px 4px;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+td.label { color: var(--accent); text-align:left; padding-left: 6px; }
+td.given { color: var(--accent); }
+td.phrase { text-align:left; white-space:normal; }
+input.blank, select.blank {
+  font-family: 'Baloo 2', sans-serif;
+  width: 100%;
+  min-width: 54px;
+  max-width: 150px;
+  padding: 5px 6px;
+  font-size: 0.85rem;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  text-align: center;
+  color: var(--gold);
+  font-weight: 700;
+}
+input.blank:focus, select.blank:focus { outline: none; border-bottom-color: var(--accent); }
+input.blank.correct, select.blank.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+input.blank.incorrect, select.blank.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+input.line {
+  font-family: 'Baloo 2', sans-serif;
+  width: 100%;
+  padding: 6px 8px;
+  font-size: 0.9rem;
+  border: none;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  color: var(--gold);
+  font-weight: 600;
+}
+input.line:focus { outline: none; border-bottom-color: var(--accent); }
+input.line.correct { color: var(--correct-fg); border-bottom-color: var(--correct-fg); }
+input.line.incorrect { color: var(--incorrect-fg); border-bottom-color: var(--incorrect-fg); }
+.sentence-item, .item { margin-bottom: 14px; }
+.sentence-item .given, .item .given { font-weight: 700; color: var(--gold); font-size: 0.92rem; margin-bottom: 4px; }
+.item .jumble { font-weight: 700; color: var(--accent); font-size: 0.92rem; margin-bottom: 6px; }
+.item .hint { font-weight: 600; color: var(--gold); opacity: 0.7; font-size: 0.8rem; margin-left: 6px; }
+.para { font-size: 1rem; line-height: 2.6; color: var(--gold); font-weight: 600; }
+.choice-row { margin-bottom: 12px; font-weight: 700; color: var(--gold); font-size: 0.92rem; }
+.choice-row .num { color: var(--accent); margin-right: 6px; }
+.choice-btn {
+  font-family: 'Baloo 2', sans-serif;
+  display: inline-block;
+  border: 2px solid var(--border);
+  background: #fff;
+  color: var(--gold);
+  border-radius: 10px;
+  padding: 6px 12px;
+  margin: 3px 6px 3px 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+.choice-btn.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+.choice-btn.correct { background: var(--correct-bg); color: var(--correct-fg); border-color: var(--correct-fg); }
+.choice-btn.incorrect { background: var(--incorrect-bg); color: var(--incorrect-fg); border-color: var(--incorrect-fg); }
+.answer-reveal {
+  display: inline-block;
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.78rem;
+  color: var(--correct-fg);
+  background: var(--correct-bg);
+  border: 1px solid var(--correct-fg);
+  border-radius: 6px;
+  padding: 1px 7px;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+.answer-reveal::before { content: "\2713 "; }
+td .answer-reveal { display: block; margin: 3px 0 0; }
+.controls { display: flex; justify-content: center; gap: 16px; margin-top: 26px; }
+button.action-btn {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 26px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  background: var(--gold);
+}
+button.reset-btn { background: var(--accent); }
+button.action-btn:hover { opacity: 0.9; }
+#score-summary { text-align: center; font-weight: 700; font-size: 1.05rem; margin-top: 18px; color: var(--gold); }
+@media (max-width: 640px) {
+  .two-col { flex-direction: column; }
+  .col.split { border-right: none; border-bottom: 2px solid var(--border); padding-right: 0; padding-bottom: 18px; }
+  th, td { font-size: 0.72rem; }
+}
+</style>
+</head>
+<body>
+<div class="card-container">
+  <h1>Complete with "A FEW", "A LITTLE", "FEW" or "LITTLE"</h1>
+  
+  <div class="card">
+<div class="sentence-item"><span class="given">1. I&#x27;m not worried about the presentation; I have <input class="blank" data-answer="a few" style="max-width:110px;"> good ideas to share.</span></div><div class="sentence-item"><span class="given">2. I&#x27;m worried about the presentation; I have <input class="blank" data-answer="few" style="max-width:110px;"> good ideas to share.</span></div><div class="sentence-item"><span class="given">3. Don&#x27;t worry, we have <input class="blank" data-answer="a little" style="max-width:110px;"> sugar left – enough for the cake.</span></div><div class="sentence-item"><span class="given">4. We can&#x27;t make the cake; we have <input class="blank" data-answer="little" style="max-width:110px;"> sugar left.</span></div><div class="sentence-item"><span class="given">5. The teacher was pleased – <input class="blank" data-answer="a few" style="max-width:110px;"> students asked great questions.</span></div><div class="sentence-item"><span class="given">6. The teacher was disappointed – <input class="blank" data-answer="few" style="max-width:110px;"> students did the homework.</span></div><div class="sentence-item"><span class="given">7. I&#x27;m fine, thanks, just <input class="blank" data-answer="a little" style="max-width:110px;"> pain in my leg, nothing serious.</span></div><div class="sentence-item"><span class="given">8. I need to see a doctor – I have <input class="blank" data-answer="little" style="max-width:110px;"> energy these days.</span></div>
+  </div>
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+  <div id="score-summary"></div>
+</div>
+<script>
+function normalize(str) {
+  return str.trim().toLowerCase().replace(/['']/g, "'").replace(/\s+/g, ' ');
+}
+function clearReveal(el) {
+  const next = el.nextElementSibling;
+  if (next && next.classList && next.classList.contains('answer-reveal')) next.remove();
+}
+function showReveal(el, text) {
+  clearReveal(el);
+  const span = document.createElement('span');
+  span.className = 'answer-reveal';
+  span.textContent = text;
+  el.insertAdjacentElement('afterend', span);
+}
+document.getElementById('check-btn').addEventListener('click', () => {
+  let total = 0, correct = 0;
+
+  const inputs = document.querySelectorAll('input.blank[data-answer], input.line[data-answer]');
+  inputs.forEach(input => {
+    total++;
+    const rawCandidates = input.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(input.value);
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    if (candidates.includes(userVal)) { input.classList.add('correct'); correct++; }
+    else { input.classList.add('incorrect'); showReveal(input, rawCandidates.join(' / ')); }
+    input.disabled = true;
+  });
+
+  const selects = document.querySelectorAll('select.blank[data-answer]');
+  selects.forEach(sel => {
+    total++;
+    const rawCandidates = sel.dataset.answer.split('||');
+    const candidates = rawCandidates.map(normalize);
+    const userVal = normalize(sel.value);
+    sel.classList.remove('correct', 'incorrect');
+    clearReveal(sel);
+    if (candidates.includes(userVal)) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('incorrect'); showReveal(sel, rawCandidates.join(' / ')); }
+    sel.disabled = true;
+  });
+
+  const choiceGroups = document.querySelectorAll('[data-choice-correct]');
+  choiceGroups.forEach(group => {
+    total++;
+    const correctVal = group.dataset.choiceCorrect;
+    const selected = group.querySelector('.choice-btn.selected');
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.classList.remove('correct','incorrect'));
+    if (selected && selected.dataset.value === correctVal) {
+      selected.classList.add('correct');
+      correct++;
+    } else {
+      if (selected) selected.classList.add('incorrect');
+      group.querySelectorAll('.choice-btn').forEach(btn => { if (btn.dataset.value === correctVal) btn.classList.add('correct'); });
+    }
+    group.querySelectorAll('.choice-btn').forEach(btn => btn.style.pointerEvents = 'none');
+  });
+
+  const wordbags = document.querySelectorAll('input.line[data-words]');
+  wordbags.forEach(input => {
+    total++;
+    const required = JSON.parse(input.dataset.words).map(normalize).sort();
+    const userWords = normalize(input.value).replace(/[.,!?;:()]/g, '').split(' ').filter(Boolean).sort();
+    const reqClean = required.map(w => w.replace(/[.,!?;:()]/g, ''));
+    input.classList.remove('correct', 'incorrect');
+    clearReveal(input);
+    const match = JSON.stringify(userWords) === JSON.stringify(reqClean.sort());
+    if (match) { input.classList.add('correct'); correct++; }
+    else {
+      const sample = input.dataset.sample || JSON.parse(input.dataset.words).join(' ');
+      showReveal(input, sample);
+    }
+    input.disabled = true;
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correct + ' / ' + total;
+});
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+document.querySelectorAll('[data-choice-correct]').forEach(group => {
+  group.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+    });
+  });
+});
+</script>
+</body>
+</html>

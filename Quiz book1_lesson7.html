@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 1 - Lesson 7 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --blue: #3D6D9E;
+    --light-blue: #EDF4FC;
+    --blue-border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--blue-border);
+  }
+
+  .option-pill.selected {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--blue-border);
+    border-radius: 10px;
+    color: var(--navy);
+    background: var(--light-blue);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 1 - Lesson 7 Quiz</h1>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 7,
+  "title": "Book 1 - Lesson 7 Quiz",
+  "sections": [
+    {
+      "name": "Vocabulary",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'head'?",
+          "options": [
+            "Rabo",
+            "Nariz",
+            "Cabeça",
+            "Chapéu"
+          ],
+          "correct": "Cabeça"
+        },
+        {
+          "id": "q2",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'hat'?",
+          "options": [
+            "Cabeça",
+            "Rabo",
+            "Pneu",
+            "Chapéu"
+          ],
+          "correct": "Chapéu"
+        },
+        {
+          "id": "q3",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'tail'?",
+          "options": [
+            "Pneu",
+            "Nariz",
+            "Cabeça",
+            "Rabo"
+          ],
+          "correct": "Rabo"
+        },
+        {
+          "id": "q4",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'nose'?",
+          "options": [
+            "Pneu",
+            "Nariz",
+            "Chapéu",
+            "Rabo"
+          ],
+          "correct": "Nariz"
+        },
+        {
+          "id": "q5",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'tyre'?",
+          "options": [
+            "Nariz",
+            "Chapéu",
+            "Pneu",
+            "Cabeça"
+          ],
+          "correct": "Pneu"
+        }
+      ]
+    },
+    {
+      "name": "Body Parts Vocabulary",
+      "questions": [
+        {
+          "id": "q6",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Rosto'?",
+          "correct": [
+            "Face"
+          ]
+        },
+        {
+          "id": "q7",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Boca'?",
+          "correct": [
+            "Mouth"
+          ]
+        },
+        {
+          "id": "q8",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Olho'?",
+          "correct": [
+            "Eye"
+          ]
+        },
+        {
+          "id": "q9",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Cabelo'?",
+          "correct": [
+            "Hair"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Braço'?",
+          "correct": [
+            "Arm"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Mão'?",
+          "correct": [
+            "Hand"
+          ]
+        },
+        {
+          "id": "q12",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Dedo'?",
+          "correct": [
+            "Finger"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Polegar'?",
+          "correct": [
+            "Thumb"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Grammar: Genitive vs. Possessive Case",
+      "questions": [
+        {
+          "id": "q14",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive ('s) case: 'The dog of John'",
+          "correct": [
+            "John's dog.",
+            "John's dog"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive ('s) case: 'The car of the woman'",
+          "correct": [
+            "The woman's car.",
+            "The woman's car"
+          ]
+        },
+        {
+          "id": "q16",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive ('s) case: 'The hat of the boy'",
+          "correct": [
+            "The boy's hat.",
+            "The boy's hat"
+          ]
+        },
+        {
+          "id": "q17",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive ('s) case: 'The bedroom of my brother'",
+          "correct": [
+            "My brother's bedroom.",
+            "My brother's bedroom"
+          ]
+        },
+        {
+          "id": "q18",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive ('s) case: 'The mother of John and Mary'",
+          "correct": [
+            "John and Mary's mother.",
+            "John and Mary's mother"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Possessive Case with Plural / 'S' Endings",
+      "questions": [
+        {
+          "id": "q19",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The toy of Lucas'",
+          "correct": [
+            "Lucas' toy.",
+            "Lucas' toy"
+          ]
+        },
+        {
+          "id": "q20",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The dress of the girls'",
+          "correct": [
+            "The girls' dress.",
+            "The girls' dress"
+          ]
+        },
+        {
+          "id": "q21",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The watch of Thaís'",
+          "correct": [
+            "Thaís' watch.",
+            "Thaís' watch",
+            "Thais' watch.",
+            "Thais' watch"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Use the Possessive Case",
+      "questions": [
+        {
+          "id": "q22",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The computer of the girl.'",
+          "correct": [
+            "The girl's computer.",
+            "The girl's computer"
+          ]
+        },
+        {
+          "id": "q23",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The bedroom of Elisa and Martha.'",
+          "correct": [
+            "Elisa and Martha's bedroom.",
+            "Elisa and Martha's bedroom"
+          ]
+        },
+        {
+          "id": "q24",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The car of the boy is a Ferrari.'",
+          "correct": [
+            "The boy's car is a Ferrari.",
+            "The boy's car is a Ferrari"
+          ]
+        },
+        {
+          "id": "q25",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The computers of the girls are broken.'",
+          "correct": [
+            "The girls' computers are broken.",
+            "The girls' computers are broken"
+          ]
+        },
+        {
+          "id": "q26",
+          "type": "fill_blank",
+          "prompt": "Rewrite using the possessive case: 'The bedroom of James is dirty.'",
+          "correct": [
+            "James' bedroom is dirty.",
+            "James' bedroom is dirty"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nationalities Vocabulary",
+      "questions": [
+        {
+          "id": "q27",
+          "type": "multiple_choice",
+          "prompt": "What is the nationality for someone from Japan?",
+          "options": [
+            "Polish",
+            "Argentinian",
+            "Spanish",
+            "Japanese"
+          ],
+          "correct": "Japanese"
+        },
+        {
+          "id": "q28",
+          "type": "multiple_choice",
+          "prompt": "What is the nationality for someone from Poland?",
+          "options": [
+            "Polish",
+            "Japanese",
+            "Argentinian",
+            "Spanish"
+          ],
+          "correct": "Polish"
+        },
+        {
+          "id": "q29",
+          "type": "multiple_choice",
+          "prompt": "What is the nationality for someone from Argentina?",
+          "options": [
+            "Polish",
+            "Japanese",
+            "Spanish",
+            "Argentinian"
+          ],
+          "correct": "Argentinian"
+        },
+        {
+          "id": "q30",
+          "type": "multiple_choice",
+          "prompt": "What is the nationality for someone from Spain?",
+          "options": [
+            "Polish",
+            "Japanese",
+            "Spanish",
+            "Argentinian"
+          ],
+          "correct": "Spanish"
+        }
+      ]
+    },
+    {
+      "name": "Countries and Nationalities",
+      "questions": [
+        {
+          "id": "q31",
+          "type": "fill_blank",
+          "prompt": "A person from Brazil speaks ______.",
+          "correct": [
+            "Portuguese"
+          ]
+        },
+        {
+          "id": "q32",
+          "type": "fill_blank",
+          "prompt": "A person from Poland is ______.",
+          "correct": [
+            "Polish"
+          ]
+        },
+        {
+          "id": "q33",
+          "type": "fill_blank",
+          "prompt": "A person from China is ______.",
+          "correct": [
+            "Chinese"
+          ]
+        },
+        {
+          "id": "q34",
+          "type": "fill_blank",
+          "prompt": "A person from Russia is ______.",
+          "correct": [
+            "Russian"
+          ]
+        },
+        {
+          "id": "q35",
+          "type": "fill_blank",
+          "prompt": "Messi is from Argentina; he is ______.",
+          "correct": [
+            "Argentinian"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Reading: Text 3",
+      "questions": [
+        {
+          "id": "q36",
+          "type": "fill_blank",
+          "prompt": "We aren't learning Russian; we are learning English. What language are 'we' learning?",
+          "correct": [
+            "English"
+          ]
+        },
+        {
+          "id": "q37",
+          "type": "fill_blank",
+          "prompt": "In Brazil we speak Portuguese. What language do people speak in Brazil?",
+          "correct": [
+            "Portuguese"
+          ]
+        },
+        {
+          "id": "q38",
+          "type": "fill_blank",
+          "prompt": "Messi is from Argentina; he's Argentinian and he speaks Spanish. What nationality is Messi?",
+          "correct": [
+            "Argentinian"
+          ]
+        },
+        {
+          "id": "q39",
+          "type": "fill_blank",
+          "prompt": "What language does Messi speak?",
+          "correct": [
+            "Spanish"
+          ]
+        }
+      ],
+      "note": "Write ONLY the language/nationality."
+    },
+    {
+      "name": "Present Continuous (Interrogative)",
+      "questions": [
+        {
+          "id": "q40",
+          "type": "fill_blank",
+          "prompt": "Complete: Are ______ studying?",
+          "correct": [
+            "you",
+            "we",
+            "they"
+          ]
+        },
+        {
+          "id": "q41",
+          "type": "fill_blank",
+          "prompt": "Complete: Is ______ wearing?",
+          "correct": [
+            "he",
+            "she",
+            "it"
+          ]
+        },
+        {
+          "id": "q42",
+          "type": "fill_blank",
+          "prompt": "Complete: Is ______ wearing?",
+          "correct": [
+            "she",
+            "he",
+            "it"
+          ]
+        },
+        {
+          "id": "q43",
+          "type": "fill_blank",
+          "prompt": "Complete: Is ______ wearing?",
+          "correct": [
+            "it",
+            "he",
+            "she"
+          ]
+        },
+        {
+          "id": "q44",
+          "type": "fill_blank",
+          "prompt": "Complete: Are ______ wearing?",
+          "correct": [
+            "we",
+            "you",
+            "they"
+          ]
+        },
+        {
+          "id": "q45",
+          "type": "fill_blank",
+          "prompt": "Complete: Are ______ wearing?",
+          "correct": [
+            "you",
+            "we",
+            "they"
+          ]
+        },
+        {
+          "id": "q46",
+          "type": "fill_blank",
+          "prompt": "Complete: Are ______ wearing?",
+          "correct": [
+            "they",
+            "you",
+            "we"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "questions": [
+        {
+          "id": "q47",
+          "type": "multiple_choice",
+          "prompt": "What is the rule for making the possessive case when a plural noun or name already ends in 's'?",
+          "options": [
+            "Do not use the possessive case at all.",
+            "Add only an apostrophe, with no extra 's'.",
+            "Add an apostrophe and an extra 's'."
+          ],
+          "correct": "Add only an apostrophe, with no extra 's'."
+        },
+        {
+          "id": "q48",
+          "type": "multiple_choice",
+          "prompt": "Which sentence correctly uses the Present Continuous interrogative form?",
+          "options": [
+            "Learning you are English?",
+            "Are you learning English?",
+            "You are learning English?"
+          ],
+          "correct": "Are you learning English?"
+        }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    if (section.note) {
+      const note = document.createElement('div');
+      note.className = 'instructions';
+      note.style.marginBottom = '16px';
+      note.textContent = section.note;
+      sectionDiv.appendChild(note);
+    }
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

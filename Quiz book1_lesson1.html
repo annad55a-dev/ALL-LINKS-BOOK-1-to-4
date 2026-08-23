@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 1 - Lesson 1 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --blue: #3D6D9E;
+    --light-blue: #EDF4FC;
+    --blue-border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--blue-border);
+  }
+
+  .option-pill.selected {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--blue-border);
+    border-radius: 10px;
+    color: var(--navy);
+    background: var(--light-blue);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 1 - Lesson 1 Quiz</h1>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 1,
+  "title": "Book 1 - Lesson 1 Quiz",
+  "sections": [
+    {
+      "name": "Vocabulary",
+      "questions": [
+        { "id": "q1", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'a child'?", "options": ["Uma criança", "Uma casa", "Senhorita", "Depois"], "correct": "Uma criança" },
+        { "id": "q2", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'a house'?", "options": ["Um jardim", "Uma casa", "Repita", "Uma criança"], "correct": "Uma casa" },
+        { "id": "q3", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Miss'?", "options": ["Depois", "Repita", "Senhorita", "Uma casa"], "correct": "Senhorita" },
+        { "id": "q4", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'Repeat'?", "options": ["Repita", "Um jardim", "Senhorita", "Depois"], "correct": "Repita" },
+        { "id": "q5", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'a garden'?", "options": ["Uma casa", "Um jardim", "Uma criança", "Repita"], "correct": "Um jardim" },
+        { "id": "q6", "type": "multiple_choice", "prompt": "What is the Portuguese translation of 'After'?", "options": ["Senhorita", "Uma criança", "Depois", "Um jardim"], "correct": "Depois" }
+      ]
+    },
+    {
+      "name": "Articles: A or An",
+      "questions": [
+        { "id": "q7", "type": "fill_blank", "prompt": "______ car", "correct": ["a"] },
+        { "id": "q8", "type": "fill_blank", "prompt": "______ apple", "correct": ["an"] },
+        { "id": "q9", "type": "fill_blank", "prompt": "______ hour", "correct": ["an"] },
+        { "id": "q10", "type": "fill_blank", "prompt": "______ university", "correct": ["a"] },
+        { "id": "q11", "type": "fill_blank", "prompt": "______ idea", "correct": ["an"] },
+        { "id": "q12", "type": "fill_blank", "prompt": "______ house", "correct": ["a"] }
+      ]
+    },
+    {
+      "name": "Grammar: Verb To Be (Affirmative)",
+      "questions": [
+        { "id": "q13", "type": "fill_blank", "prompt": "I ______ a teacher.", "correct": ["am"] },
+        { "id": "q14", "type": "fill_blank", "prompt": "You ______ a student.", "correct": ["are"] },
+        { "id": "q15", "type": "fill_blank", "prompt": "He ______ a child.", "correct": ["is"] },
+        { "id": "q16", "type": "fill_blank", "prompt": "She ______ a child.", "correct": ["is"] },
+        { "id": "q17", "type": "fill_blank", "prompt": "It ______ a house.", "correct": ["is"] }
+      ]
+    },
+    {
+      "name": "Grammar: Verb To Be (Questions)",
+      "questions": [
+        { "id": "q18", "type": "multiple_choice", "prompt": "Which is the correct question form of 'I am a teacher'?", "options": ["Am I a teacher?", "Is I a teacher?", "Are I a teacher?"], "correct": "Am I a teacher?" },
+        { "id": "q19", "type": "multiple_choice", "prompt": "Which is the correct question form of 'You are a student'?", "options": ["Is you a student?", "Am you a student?", "Are you a student?"], "correct": "Are you a student?" },
+        { "id": "q20", "type": "multiple_choice", "prompt": "Which is the correct question form of 'He is a child'?", "options": ["Are he a child?", "Is he a child?", "Am he a child?"], "correct": "Is he a child?" },
+        { "id": "q21", "type": "multiple_choice", "prompt": "Which is the correct question form of 'She is a child'?", "options": ["Am she a child?", "Are she a child?", "Is she a child?"], "correct": "Is she a child?" },
+        { "id": "q22", "type": "multiple_choice", "prompt": "Which is the correct question form of 'It is a house'?", "options": ["Is it a house?", "Are it a house?", "Am it a house?"], "correct": "Is it a house?" }
+      ]
+    },
+    {
+      "name": "Contractions",
+      "questions": [
+        { "id": "q23", "type": "fill_blank", "prompt": "I am → ______", "correct": ["I'm"] },
+        { "id": "q24", "type": "fill_blank", "prompt": "You are → ______", "correct": ["You're"] },
+        { "id": "q25", "type": "fill_blank", "prompt": "He is → ______", "correct": ["He's"] },
+        { "id": "q26", "type": "fill_blank", "prompt": "She is → ______", "correct": ["She's"] },
+        { "id": "q27", "type": "fill_blank", "prompt": "It is → ______", "correct": ["It's"] }
+      ]
+    },
+    {
+      "name": "Punctuation Marks",
+      "questions": [
+        { "id": "q28", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Ponto final'?", "correct": ["full stop", "period"] },
+        { "id": "q29", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Vírgula'?", "correct": ["comma"] },
+        { "id": "q30", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Ponto de interrogação'?", "correct": ["question mark"] },
+        { "id": "q31", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Ponto de exclamação'?", "correct": ["exclamation mark", "exclamation point"] },
+        { "id": "q32", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Dois pontos'?", "correct": ["colon"] },
+        { "id": "q33", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Ponto e vírgula'?", "correct": ["semicolon"] },
+        { "id": "q34", "type": "fill_blank", "prompt": "What is the English name for the punctuation mark 'Apóstrofe'?", "correct": ["apostrophe"] }
+      ]
+    },
+    {
+      "name": "Vowels & Consonants",
+      "questions": [
+        { "id": "q35", "type": "fill_blank", "prompt": "How many vowels are there in English?", "correct": ["5", "five"] },
+        { "id": "q36", "type": "multiple_choice", "prompt": "Which of the following correctly lists all five English vowels?", "options": ["A, E, I, O, U", "A, B, C, D, E", "A, E, I, O, Y", "E, I, O, U, W"], "correct": "A, E, I, O, U" },
+        { "id": "q37", "type": "multiple_choice", "prompt": "True or False: A, B, C, D, E are all vowels.", "options": ["True", "False"], "correct": "False" }
+      ]
+    },
+    {
+      "name": "Titles & Article Usage",
+      "questions": [
+        { "id": "q38", "type": "multiple_choice", "prompt": "Which title is used for a married woman?", "options": ["Mr", "Mrs", "Miss"], "correct": "Mrs" },
+        { "id": "q39", "type": "multiple_choice", "prompt": "Which title is used for an unmarried woman or girl?", "options": ["Mr", "Mrs", "Miss"], "correct": "Miss" },
+        { "id": "q40", "type": "multiple_choice", "prompt": "Which example correctly uses 'an' before a vowel sound?", "options": ["an apple", "a apple", "an car"], "correct": "an apple" }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

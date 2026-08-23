@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 3 - Lesson 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #8A6100;
+    --gold: #E0A800;
+    --light-yellow: #FFF9E6;
+    --yellow-border: #F2D488;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-yellow);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--dark);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--gold);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--dark);
+    color: #fff;
+    border: 2px solid var(--dark);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--yellow-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--dark);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-yellow);
+    border: 2px solid var(--yellow-border);
+    color: var(--dark);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--yellow-border);
+  }
+
+  .option-pill.selected {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--yellow-border);
+    border-radius: 10px;
+    color: var(--dark);
+    background: var(--light-yellow);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--dark);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--gold);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--dark);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 3 - Lesson 5</h1>
+  <div class="instructions">Choose the correct answer for each question, then press "Check Answers".</div>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 5,
+  "title": "Book 3 - Lesson 5",
+  "sections": [
+    {
+      "name": "Everyday Action Verbs",
+      "questions": [
+        { "id": "q1", "type": "multiple_choice", "prompt": "Complete the sentence: 'Every morning, I ___ my teeth before breakfast.'", "options": ["wash", "brush", "feed", "drive"], "correct": "brush" },
+        { "id": "q2", "type": "multiple_choice", "prompt": "Complete the sentence: 'Dad will ___ us to school today because it's raining.'", "options": ["feed", "wash", "drive", "give"], "correct": "drive" },
+        { "id": "q3", "type": "multiple_choice", "prompt": "Which word means to give food to an animal or a baby?", "options": ["wash", "brush", "drive", "feed"], "correct": "feed" }
+      ]
+    },
+    {
+      "name": "Giving, Enjoying & Cartoons",
+      "questions": [
+        { "id": "q4", "type": "multiple_choice", "prompt": "Complete the sentence: 'Can you ___ me that book, please?'", "options": ["enjoy", "drive", "give", "feed"], "correct": "give" },
+        { "id": "q5", "type": "multiple_choice", "prompt": "Complete the sentence: 'Kids love to watch a funny ___ on Saturday mornings.'", "options": ["tongue", "cartoon", "mouth", "mother tongue"], "correct": "cartoon" },
+        { "id": "q6", "type": "multiple_choice", "prompt": "Which word means to like doing something very much?", "options": ["give", "feed", "wash", "enjoy"], "correct": "enjoy" }
+      ]
+    },
+    {
+      "name": "Learning a Language",
+      "questions": [
+        { "id": "q7", "type": "multiple_choice", "prompt": "What is the opposite of 'EASY'?", "options": ["Mother tongue", "Difficult", "Learn", "Mouth"], "correct": "Difficult" },
+        { "id": "q8", "type": "multiple_choice", "prompt": "Which word means the language you speak from birth, at home with your family?", "options": ["Tongue", "Mouth", "Mother tongue", "Learn"], "correct": "Mother tongue" },
+        { "id": "q9", "type": "multiple_choice", "prompt": "Complete the sentence: 'We use our ___ to taste food and to speak.'", "options": ["tongue", "mouth", "mother tongue", "learn"], "correct": "tongue" }
+      ]
+    },
+    {
+      "name": "Family Members",
+      "questions": [
+        { "id": "q10", "type": "multiple_choice", "prompt": "Complete the sentence: 'Sandy is Alan's ___ ; they got married last year.'", "options": ["daughter", "son", "wife", "single"], "correct": "wife" },
+        { "id": "q11", "type": "multiple_choice", "prompt": "What is the opposite of 'MARRIED'?", "options": ["Single", "Husband", "Wife", "Son"], "correct": "Single" },
+        { "id": "q12", "type": "multiple_choice", "prompt": "Complete the sentence: 'Their ___ is only two years old and loves to play.'", "options": ["husband", "daughter", "married", "single"], "correct": "daughter" }
+      ]
+    },
+    {
+      "name": "Object Pronouns (Part 1)",
+      "questions": [
+        { "id": "q13", "type": "multiple_choice", "prompt": "I've got a mouse. I keep ___ in a cage.", "options": ["them", "it", "me"], "correct": "it" },
+        { "id": "q14", "type": "multiple_choice", "prompt": "Mr Brown is a good teacher. We really like ___.", "options": ["her", "us", "him"], "correct": "him" },
+        { "id": "q15", "type": "multiple_choice", "prompt": "We're going to the cinema. Come with ___.", "options": ["us", "you", "him"], "correct": "us" }
+      ]
+    },
+    {
+      "name": "Object Pronouns (Part 2)",
+      "questions": [
+        { "id": "q16", "type": "multiple_choice", "prompt": "We haven't got cats at home. We don't like ___.", "options": ["it", "them", "they"], "correct": "them" },
+        { "id": "q17", "type": "multiple_choice", "prompt": "This is my new computer - do you like ___?", "options": ["her", "him", "it"], "correct": "it" },
+        { "id": "q18", "type": "multiple_choice", "prompt": "Look at those dogs. I'm scared of ___.", "options": ["them", "it", "you"], "correct": "them" }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>

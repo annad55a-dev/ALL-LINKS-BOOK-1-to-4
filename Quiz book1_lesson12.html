@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book 1 - Lesson 12 Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #012169;
+    --blue: #3D6D9E;
+    --light-blue: #EDF4FC;
+    --blue-border: #A9C7E8;
+    --correct-fg: #2E7D32;
+    --correct-bg: #E8F5E9;
+    --incorrect-fg: #C62828;
+    --incorrect-bg: #FDECEA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    margin: 0;
+    padding: 24px 16px 60px;
+    color: var(--navy);
+  }
+
+  .quiz-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .instructions {
+    text-align: center;
+    color: var(--blue);
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+  }
+
+  .section {
+    margin-bottom: 32px;
+  }
+
+  .section-label {
+    display: inline-block;
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 999px;
+    padding: 6px 18px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+
+  .question {
+    background: #fff;
+    border: 2px solid var(--blue-border);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+  }
+
+  .prompt {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+  }
+
+  .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option-pill {
+    font-family: 'Baloo 2', sans-serif;
+    background: var(--light-blue);
+    border: 2px solid var(--blue-border);
+    color: var(--navy);
+    border-radius: 999px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .option-pill:hover {
+    background: var(--blue-border);
+  }
+
+  .option-pill.selected {
+    background: var(--blue);
+    color: #fff;
+    border-color: var(--blue);
+  }
+
+  .option-pill.correct {
+    background: var(--correct-bg);
+    color: var(--correct-fg);
+    border-color: var(--correct-fg);
+  }
+
+  .option-pill.incorrect {
+    background: var(--incorrect-bg);
+    color: var(--incorrect-fg);
+    border-color: var(--incorrect-fg);
+  }
+
+  .fill-blank-input {
+    font-family: 'Baloo 2', sans-serif;
+    width: 100%;
+    max-width: 320px;
+    padding: 10px 14px;
+    font-size: 1rem;
+    border: 2px solid var(--blue-border);
+    border-radius: 10px;
+    color: var(--navy);
+    background: var(--light-blue);
+  }
+
+  .fill-blank-input.correct {
+    background: var(--correct-bg);
+    border-color: var(--correct-fg);
+    color: var(--correct-fg);
+  }
+
+  .fill-blank-input.incorrect {
+    background: var(--incorrect-bg);
+    border-color: var(--incorrect-fg);
+    color: var(--incorrect-fg);
+  }
+
+  .feedback-icon {
+    margin-left: 8px;
+    font-weight: 700;
+  }
+
+  .feedback-icon.correct { color: var(--correct-fg); }
+  .feedback-icon.incorrect { color: var(--incorrect-fg); }
+
+  .controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  button.action-btn {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 12px 32px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    background: var(--navy);
+  }
+
+  button.action-btn:hover {
+    opacity: 0.9;
+  }
+
+  button.reset-btn {
+    background: var(--blue);
+  }
+
+  #score-summary {
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-top: 24px;
+    color: var(--navy);
+  }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h1>Book 1 - Lesson 12 Quiz</h1>
+
+  <div id="quiz-body"></div>
+
+  <div class="controls">
+    <button class="action-btn" id="check-btn">Check Answers</button>
+    <button class="action-btn reset-btn" id="reset-btn">Reset</button>
+  </div>
+
+  <div id="score-summary"></div>
+</div>
+
+<script>
+const quizData = {
+  "lesson": 12,
+  "title": "Book 1 - Lesson 12 Quiz",
+  "sections": [
+    {
+      "name": "Every & Learn Vocabulary",
+      "questions": [
+        {
+          "id": "q1",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Todo/cada'?",
+          "correct": [
+            "Every"
+          ]
+        },
+        {
+          "id": "q2",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Aprender'?",
+          "correct": [
+            "Learn"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Using 'Every'",
+      "questions": [
+        {
+          "id": "q3",
+          "type": "fill_blank",
+          "prompt": "Every book on that shelf ______ blue.",
+          "correct": [
+            "is"
+          ]
+        },
+        {
+          "id": "q4",
+          "type": "fill_blank",
+          "prompt": "Every child in this class ______ learning English.",
+          "correct": [
+            "is"
+          ]
+        },
+        {
+          "id": "q5",
+          "type": "fill_blank",
+          "prompt": "Every window in the house ______ open.",
+          "correct": [
+            "is"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Object Pronouns: Quick Revision",
+      "questions": [
+        {
+          "id": "q6",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'I'?",
+          "correct": [
+            "Me"
+          ]
+        },
+        {
+          "id": "q7",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'You' (singular)?",
+          "correct": [
+            "You"
+          ]
+        },
+        {
+          "id": "q8",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'He'?",
+          "correct": [
+            "Him"
+          ]
+        },
+        {
+          "id": "q9",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'She'?",
+          "correct": [
+            "Her"
+          ]
+        },
+        {
+          "id": "q10",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'It'?",
+          "correct": [
+            "It"
+          ]
+        },
+        {
+          "id": "q11",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'We'?",
+          "correct": [
+            "Us"
+          ]
+        },
+        {
+          "id": "q12",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'You' (plural)?",
+          "correct": [
+            "You"
+          ]
+        },
+        {
+          "id": "q13",
+          "type": "fill_blank",
+          "prompt": "What is the object pronoun for the subject pronoun 'They'?",
+          "correct": [
+            "Them"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Object Pronouns Practice",
+      "questions": [
+        {
+          "id": "q14",
+          "type": "fill_blank",
+          "prompt": "I like John. → I like ______.",
+          "correct": [
+            "him"
+          ]
+        },
+        {
+          "id": "q15",
+          "type": "fill_blank",
+          "prompt": "You like me. → You like ______.",
+          "correct": [
+            "me"
+          ]
+        },
+        {
+          "id": "q16",
+          "type": "fill_blank",
+          "prompt": "I like the pen. → I like ______.",
+          "correct": [
+            "it"
+          ]
+        },
+        {
+          "id": "q17",
+          "type": "fill_blank",
+          "prompt": "I like Mr and Mrs Potter. → I like ______.",
+          "correct": [
+            "them"
+          ]
+        },
+        {
+          "id": "q18",
+          "type": "fill_blank",
+          "prompt": "She likes you and me. → She likes ______.",
+          "correct": [
+            "us"
+          ]
+        },
+        {
+          "id": "q19",
+          "type": "fill_blank",
+          "prompt": "I like my cat. → I like ______.",
+          "correct": [
+            "it"
+          ]
+        },
+        {
+          "id": "q20",
+          "type": "fill_blank",
+          "prompt": "I like Susan and Peter. → I like ______.",
+          "correct": [
+            "them"
+          ]
+        },
+        {
+          "id": "q21",
+          "type": "fill_blank",
+          "prompt": "I like my cats. → I like ______.",
+          "correct": [
+            "them"
+          ]
+        },
+        {
+          "id": "q22",
+          "type": "fill_blank",
+          "prompt": "I like you and John. → I like ______.",
+          "correct": [
+            "them"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Numbers & Address Vocabulary",
+      "questions": [
+        {
+          "id": "q23",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'phone number'?",
+          "options": [
+            "Mil",
+            "Número de telefone",
+            "Endereço",
+            "Cem"
+          ],
+          "correct": "Número de telefone"
+        },
+        {
+          "id": "q24",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'address'?",
+          "options": [
+            "Cem",
+            "Duplo",
+            "Um milhão",
+            "Endereço"
+          ],
+          "correct": "Endereço"
+        },
+        {
+          "id": "q25",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'hundred'?",
+          "options": [
+            "Um milhão",
+            "Endereço",
+            "Mil",
+            "Cem"
+          ],
+          "correct": "Cem"
+        },
+        {
+          "id": "q26",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'thousand'?",
+          "options": [
+            "Número de telefone",
+            "Cem",
+            "Duplo",
+            "Mil"
+          ],
+          "correct": "Mil"
+        },
+        {
+          "id": "q27",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'million'?",
+          "options": [
+            "Dizendo os números",
+            "Mil",
+            "Um milhão",
+            "Cem"
+          ],
+          "correct": "Um milhão"
+        },
+        {
+          "id": "q28",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'saying the numbers'?",
+          "options": [
+            "Um milhão",
+            "Endereço",
+            "Duplo",
+            "Dizendo os números"
+          ],
+          "correct": "Dizendo os números"
+        },
+        {
+          "id": "q29",
+          "type": "multiple_choice",
+          "prompt": "What is the Portuguese translation of 'double'?",
+          "options": [
+            "Cem",
+            "Mil",
+            "Dizendo os números",
+            "Duplo"
+          ],
+          "correct": "Duplo"
+        }
+      ]
+    },
+    {
+      "name": "Complete with the Verb 'To Be'",
+      "questions": [
+        {
+          "id": "q30",
+          "type": "fill_blank",
+          "prompt": "______ you a student?",
+          "correct": [
+            "Are"
+          ]
+        },
+        {
+          "id": "q31",
+          "type": "fill_blank",
+          "prompt": "______ you English?",
+          "correct": [
+            "Are"
+          ]
+        },
+        {
+          "id": "q32",
+          "type": "fill_blank",
+          "prompt": "______ you from Russia?",
+          "correct": [
+            "Are"
+          ]
+        },
+        {
+          "id": "q33",
+          "type": "fill_blank",
+          "prompt": "______ this a pen?",
+          "correct": [
+            "Is"
+          ]
+        },
+        {
+          "id": "q34",
+          "type": "fill_blank",
+          "prompt": "______ these your glasses?",
+          "correct": [
+            "Are"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Can, Sports & Food Vocabulary",
+      "questions": [
+        {
+          "id": "q35",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Consigo'?",
+          "correct": [
+            "Can"
+          ]
+        },
+        {
+          "id": "q36",
+          "type": "fill_blank",
+          "prompt": "What is one English way to say 'Não consigo'?",
+          "correct": [
+            "Cannot",
+            "Can't"
+          ]
+        },
+        {
+          "id": "q37",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Futebol'?",
+          "correct": [
+            "Football"
+          ]
+        },
+        {
+          "id": "q38",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Tênis' (sport)?",
+          "correct": [
+            "Tennis"
+          ]
+        },
+        {
+          "id": "q39",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Basquete'?",
+          "correct": [
+            "Basketball"
+          ]
+        },
+        {
+          "id": "q40",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Jogar/Brincar/Tocar'?",
+          "correct": [
+            "Play"
+          ]
+        },
+        {
+          "id": "q41",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Comida'?",
+          "correct": [
+            "Food"
+          ]
+        },
+        {
+          "id": "q42",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Bem'?",
+          "correct": [
+            "Well"
+          ]
+        },
+        {
+          "id": "q43",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Mas'?",
+          "correct": [
+            "But"
+          ]
+        },
+        {
+          "id": "q44",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Abrir'?",
+          "correct": [
+            "Open"
+          ]
+        },
+        {
+          "id": "q45",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Fechar'?",
+          "correct": [
+            "Close"
+          ]
+        },
+        {
+          "id": "q46",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Tipo'?",
+          "correct": [
+            "Kind"
+          ]
+        },
+        {
+          "id": "q47",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Favor'?",
+          "correct": [
+            "Favour"
+          ]
+        },
+        {
+          "id": "q48",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Tarefa'?",
+          "correct": [
+            "Homework"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Near, Far From, Live & This/That Vocabulary",
+      "questions": [
+        {
+          "id": "q55",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Perto'?",
+          "correct": [
+            "Near"
+          ]
+        },
+        {
+          "id": "q56",
+          "type": "fill_blank",
+          "prompt": "What is the English phrase for 'Longe de'?",
+          "correct": [
+            "Far from"
+          ]
+        },
+        {
+          "id": "q57",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Viver/Morar'?",
+          "correct": [
+            "Live"
+          ]
+        },
+        {
+          "id": "q58",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Coisa'?",
+          "correct": [
+            "Thing"
+          ]
+        },
+        {
+          "id": "q59",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Aquilo/a'?",
+          "correct": [
+            "That"
+          ]
+        },
+        {
+          "id": "q60",
+          "type": "fill_blank",
+          "prompt": "What is the English word for 'Aqueles/as'?",
+          "correct": [
+            "Those"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "This, These, That, Those",
+      "questions": [
+        {
+          "id": "q61",
+          "type": "fill_blank",
+          "prompt": "______ book (near me) is heavy.",
+          "correct": [
+            "This"
+          ]
+        },
+        {
+          "id": "q62",
+          "type": "fill_blank",
+          "prompt": "______ shoes (near me) are new.",
+          "correct": [
+            "These"
+          ]
+        },
+        {
+          "id": "q63",
+          "type": "fill_blank",
+          "prompt": "______ car (far away) is red.",
+          "correct": [
+            "That"
+          ]
+        },
+        {
+          "id": "q64",
+          "type": "fill_blank",
+          "prompt": "______ houses (far away) are big.",
+          "correct": [
+            "Those"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Review",
+      "questions": [
+        {
+          "id": "q65",
+          "type": "multiple_choice",
+          "prompt": "Which sentence correctly uses 'can' and 'can't' to describe two abilities?",
+          "options": [
+            "I can swim, but I can play the piano too much.",
+            "Swim I can, piano can't play.",
+            "I can swim, but I can't play the piano."
+          ],
+          "correct": "I can swim, but I can't play the piano."
+        },
+        {
+          "id": "q66",
+          "type": "multiple_choice",
+          "prompt": "Which sentence correctly uses 'every' with a singular noun?",
+          "options": [
+            "Every student in my class are friendly.",
+            "Every student in my class is friendly.",
+            "Every students in my class are friendly."
+          ],
+          "correct": "Every student in my class is friendly."
+        }
+      ]
+    }
+  ]
+};
+
+const userAnswers = {};
+
+function renderQuiz() {
+  const body = document.getElementById('quiz-body');
+  body.innerHTML = '';
+
+  quizData.sections.forEach(section => {
+    const sectionDiv = document.createElement('div');
+    sectionDiv.className = 'section';
+
+    const label = document.createElement('div');
+    label.className = 'section-label';
+    label.textContent = section.name;
+    sectionDiv.appendChild(label);
+
+    if (section.note) {
+      const note = document.createElement('div');
+      note.className = 'instructions';
+      note.style.marginBottom = '16px';
+      note.textContent = section.note;
+      sectionDiv.appendChild(note);
+    }
+
+    section.questions.forEach(q => {
+      const qDiv = document.createElement('div');
+      qDiv.className = 'question';
+      qDiv.id = 'question-' + q.id;
+
+      const prompt = document.createElement('div');
+      prompt.className = 'prompt';
+      prompt.textContent = q.prompt;
+      qDiv.appendChild(prompt);
+
+      if (q.type === 'multiple_choice') {
+        const optionsDiv = document.createElement('div');
+        optionsDiv.className = 'options';
+        q.options.forEach(opt => {
+          const btn = document.createElement('button');
+          btn.className = 'option-pill';
+          btn.textContent = opt;
+          btn.type = 'button';
+          btn.addEventListener('click', () => {
+            userAnswers[q.id] = opt;
+            optionsDiv.querySelectorAll('.option-pill').forEach(p => p.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+          optionsDiv.appendChild(btn);
+        });
+        qDiv.appendChild(optionsDiv);
+      } else if (q.type === 'fill_blank') {
+        const input = document.createElement('input');
+        input.className = 'fill-blank-input';
+        input.type = 'text';
+        input.id = 'input-' + q.id;
+        input.addEventListener('input', () => {
+          userAnswers[q.id] = input.value;
+        });
+        qDiv.appendChild(input);
+      }
+
+      sectionDiv.appendChild(qDiv);
+    });
+
+    body.appendChild(sectionDiv);
+  });
+}
+
+function checkAnswers() {
+  let correctCount = 0;
+  let totalCount = 0;
+
+  quizData.sections.forEach(section => {
+    section.questions.forEach(q => {
+      totalCount++;
+      const qDiv = document.getElementById('question-' + q.id);
+
+      if (q.type === 'multiple_choice') {
+        const pills = qDiv.querySelectorAll('.option-pill');
+        const userAnswer = userAnswers[q.id];
+        const isCorrect = userAnswer === q.correct;
+        if (isCorrect) correctCount++;
+
+        pills.forEach(pill => {
+          pill.classList.remove('selected');
+          if (pill.textContent === q.correct) {
+            pill.classList.add('correct');
+          } else if (pill.textContent === userAnswer && !isCorrect) {
+            pill.classList.add('incorrect');
+          }
+          pill.disabled = true;
+        });
+      } else if (q.type === 'fill_blank') {
+        const input = document.getElementById('input-' + q.id);
+        const userAnswer = (userAnswers[q.id] || '').trim().toLowerCase();
+        const isCorrect = q.correct.some(c => c.trim().toLowerCase() === userAnswer);
+        if (isCorrect) correctCount++;
+
+        input.classList.add(isCorrect ? 'correct' : 'incorrect');
+        input.disabled = true;
+
+        if (!isCorrect) {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon incorrect';
+          hint.textContent = ' ✗ (' + q.correct[0] + ')';
+          input.parentNode.appendChild(hint);
+        } else {
+          const hint = document.createElement('span');
+          hint.className = 'feedback-icon correct';
+          hint.textContent = ' ✓';
+          input.parentNode.appendChild(hint);
+        }
+      }
+    });
+  });
+
+  document.getElementById('score-summary').textContent = 'Score: ' + correctCount + ' / ' + totalCount;
+}
+
+document.getElementById('check-btn').addEventListener('click', checkAnswers);
+document.getElementById('reset-btn').addEventListener('click', () => location.reload());
+
+renderQuiz();
+</script>
+
+</body>
+</html>
